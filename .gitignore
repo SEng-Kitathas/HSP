@@ -1,0 +1,5 @@
+.pcmmad_sync_runs/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/

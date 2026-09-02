@@ -1,0 +1,379 @@
+{
+  "source_root": "C:\\Users\\ancal\\Desktop\\PCMMAD_RECEIVER_V29_NATIVE_PROTOCOL_RC1\\PCMMAD_receiver\\baseline\\pcmmad_receiver",
+  "package_label": "PCMMAD Receiver V29 Native Protocol Release Candidate",
+  "snapshot_time_utc": "2026-09-02T03:42:48.523853+00:00",
+  "tree_hash_algorithm": "sha256 over UTF-8 lines: relpath\\0file_sha256\\0bytes\\n sorted by relpath",
+  "tree_sha256": "b27fd1a4e42bce1ad08af933026845083b0c577ca7e73b95301b76e9ae1b20af",
+  "file_count": 60,
+  "excluded_dirs": [
+    ".git",
+    ".pcmmad_sync_runs",
+    ".venv",
+    "__pycache__"
+  ],
+  "excluded_suffixes": [
+    ".pyc"
+  ],
+  "files": [
+    {
+      "path": "BROWSER_BRIDGE_README.md",
+      "bytes": 555,
+      "sha256": "a09bce432dde061f8c34cb47538f862f72189050f08f7cde97c9a1f5c0b093ae",
+      "mtime_ns": 1785371661907984400
+    },
+    {
+      "path": "CHECK_BROWSER_BRIDGE.cmd",
+      "bytes": 458,
+      "sha256": "3649332df8a9f7127dc5f1d9c7995958d030e732bfb91e8ee8180ed9545dc034",
+      "mtime_ns": 1785371661910985800
+    },
+    {
+      "path": "README_CURRENT.txt",
+      "bytes": 279,
+      "sha256": "db882604f04c5af956a396195e5ff2e00bbeadb5be3706ce3a083d27bd5da170",
+      "mtime_ns": 1785371661915874700
+    },
+    {
+      "path": "START_BROWSER_BRIDGE.cmd",
+      "bytes": 360,
+      "sha256": "7f7604b344d989e994d3be1f4e286b607f9a22a961d0297a74ef5c6ce97b4a6a",
+      "mtime_ns": 1785371661918874800
+    },
+    {
+      "path": "STOP_BROWSER_BRIDGE.cmd",
+      "bytes": 392,
+      "sha256": "74ebdb5710c059f8ea7d8d05a18fe09485f85b98642bc0e8c6af7e126a3d4254",
+      "mtime_ns": 1785371661922000700
+    },
+    {
+      "path": "api_wire_common.py",
+      "bytes": 2650,
+      "sha256": "68f7801d4bcba3ff465a287b3615f9e46bb4aa6b73aff3fdf33ad06d5b770c1f",
+      "mtime_ns": 1785371661927002400
+    },
+    {
+      "path": "api_wire_context.py",
+      "bytes": 15572,
+      "sha256": "9ab2cb35731e80fbbdfb270c63546b66e1bba4a9343d791ef696317b15c6e4ed",
+      "mtime_ns": 1785371661932013400
+    },
+    {
+      "path": "api_wire_execution.py",
+      "bytes": 8727,
+      "sha256": "e2253a23f58dc590b78b3f67c80d68b9461f333674a0b38a01f72548224f0ec1",
+      "mtime_ns": 1785371661936433400
+    },
+    {
+      "path": "api_wire_models.py",
+      "bytes": 284,
+      "sha256": "6bd55b8139102cdb71e7b3d139462d16c17124c486c1d76b5bd392be824510f8",
+      "mtime_ns": 1785371661941434700
+    },
+    {
+      "path": "api_wire_power.py",
+      "bytes": 9253,
+      "sha256": "c13339a150dc4cbce9ef8ff36ec534b6fb618dde081758ee562fe31de73a71a1",
+      "mtime_ns": 1785371661946432900
+    },
+    {
+      "path": "api_wire_research.py",
+      "bytes": 3663,
+      "sha256": "e92245fbead18435b5e1904c3e9d018784ad8611103a93c886a22d3a9d97c2de",
+      "mtime_ns": 1785371661952478400
+    },
+    {
+      "path": "app_factory.py",
+      "bytes": 4115,
+      "sha256": "67874a500c30de791bb77d9812e854116d7f9e4c4994b595328de9c2bead4262",
+      "mtime_ns": 1785371661957478900
+    },
+    {
+      "path": "browser_bridge_service.py",
+      "bytes": 16630,
+      "sha256": "e7a87fd0323d0881bd72f5bf229894abf2b026406d80fd683a21b122744eb7b8",
+      "mtime_ns": 1788315821522703000
+    },
+    {
+      "path": "browser_bridge_service.py.bak.20260901_ui_upload",
+      "bytes": 16120,
+      "sha256": "ca312ec5a396d416d475f0e17b3dabaa7324c762e3a003725a95f87e5ff14b85",
+      "mtime_ns": 1785371661962480500
+    },
+    {
+      "path": "context_config.py",
+      "bytes": 695,
+      "sha256": "152cce25108db51c4e05d56508643eca5a1f2cb26738beaef5a507c800fdcbdc",
+      "mtime_ns": 1785371661967478400
+    },
+    {
+      "path": "context_engine.py",
+      "bytes": 40953,
+      "sha256": "84685074d5a53c591a5be8b559e41882a3d4858d6303f20352203d1552009ba0",
+      "mtime_ns": 1785371661971874900
+    },
+    {
+      "path": "context_routes.py",
+      "bytes": 10331,
+      "sha256": "8fd824cb1231eea18dd39bebc3b0e21ffcdd004ada9d60f1ebfa2bd2eae4e8f5",
+      "mtime_ns": 1785371661976882900
+    },
+    {
+      "path": "control_plane_models.py",
+      "bytes": 29701,
+      "sha256": "58c011ae9dfef3e04139788a82c0b2b83e776c9ae737828801e1c6c39b372b7a",
+      "mtime_ns": 1785371661981876900
+    },
+    {
+      "path": "execution_routes.py",
+      "bytes": 64433,
+      "sha256": "ea1010338036e137ca10aa57c0d30296bd6a50f5a921cdcf86b7cef4162696d1",
+      "mtime_ns": 1785518722813918400
+    },
+    {
+      "path": "lab_plugins.py",
+      "bytes": 1399,
+      "sha256": "091d179e265b819be65e48c86c9db4625565e4a1d790afe3cef0d8421ab12718",
+      "mtime_ns": 1785371661992876000
+    },
+    {
+      "path": "lab_policy.py",
+      "bytes": 2303,
+      "sha256": "09873ccdbee784995f5080e5fe3091a7b6023c7aa21c62c706524706494d3956",
+      "mtime_ns": 1785371661997878900
+    },
+    {
+      "path": "lab_results.py",
+      "bytes": 2327,
+      "sha256": "6249005e84dc81a454b5cbc7592d890f89622ef2eb3d3aa84aee22b1e33ad639",
+      "mtime_ns": 1785371662002878300
+    },
+    {
+      "path": "lab_routes.py",
+      "bytes": 17059,
+      "sha256": "f4b35530d08aeda8a5b05b70dc93ab0d6f5a820d9b0ef509c09114fb4b28dee3",
+      "mtime_ns": 1785371662007877600
+    },
+    {
+      "path": "lab_schema_validation.py",
+      "bytes": 6347,
+      "sha256": "a43594ae2846dbf0f5751d9f769f935804aa6b84a9e1b4c6b1bc47162df61504",
+      "mtime_ns": 1785371662012388900
+    },
+    {
+      "path": "lab_state.py",
+      "bytes": 5096,
+      "sha256": "c7cfabb0634a0f21d99b90db6c2acba9f5940a34481ba51e821097d3fecda8e5",
+      "mtime_ns": 1785371662017395800
+    },
+    {
+      "path": "lab_tool_primitives.py",
+      "bytes": 1963,
+      "sha256": "2744ffde275dc22629447647f2162ea7fac00146fb50d01b2ad8c7c5e77c3a3a",
+      "mtime_ns": 1785371662022395400
+    },
+    {
+      "path": "lab_tools.py",
+      "bytes": 25605,
+      "sha256": "50da135f2d71de630125a1076c23fa56c548737703e3f4a9faadf552696af382",
+      "mtime_ns": 1785371662027548400
+    },
+    {
+      "path": "lab_tools_browser.py",
+      "bytes": 24341,
+      "sha256": "f1af362f689d25781d72620d273537ad6e06fb4fefafd2cc0d8b846a7d1aaae5",
+      "mtime_ns": 1788315821522703000
+    },
+    {
+      "path": "lab_tools_browser.py.bak.20260901_ui_upload",
+      "bytes": 24282,
+      "sha256": "21d866c1a0474d877d29b8219112f6f6203f8138010651028dd1ad326dcac631",
+      "mtime_ns": 1785371662032549900
+    },
+    {
+      "path": "lab_tools_doctrine.py",
+      "bytes": 4594,
+      "sha256": "c52b83923d84f571fe87b2e8a347d9976b87db32ee00047709692e18ee57d02e",
+      "mtime_ns": 1785371662037550400
+    },
+    {
+      "path": "lab_tools_execution.py",
+      "bytes": 17365,
+      "sha256": "8f789de776d562c8192006d8a9f70598cc4a651dfec68f0297bb132ee85aabdf",
+      "mtime_ns": 1785371662042550600
+    },
+    {
+      "path": "lab_tools_filesystem.py",
+      "bytes": 14563,
+      "sha256": "07d43307af371b527c1748cce4b3f45519a31f153ac0d9d02b9ded43590020bb",
+      "mtime_ns": 1785371662048549900
+    },
+    {
+      "path": "lab_tools_ops.py",
+      "bytes": 11246,
+      "sha256": "5ec4819e0ccba125f2aeb45c238830d45b526007deaa7ab15672e12628e2a816",
+      "mtime_ns": 1785371662053280000
+    },
+    {
+      "path": "lab_tools_project.py",
+      "bytes": 31145,
+      "sha256": "3da803a940d8fbfd31394f4cd168b6b9ee5ddac158ae629e32e5a3b3b2ca5ad7",
+      "mtime_ns": 1785371662058281000
+    },
+    {
+      "path": "lab_tools_protocol.py",
+      "bytes": 18981,
+      "sha256": "09efe27dfe9bbd9594bafe1abae7f04317d2bf577bdfcf765e859e181682cd3d",
+      "mtime_ns": 1785371662063280300
+    },
+    {
+      "path": "lab_tools_research.py",
+      "bytes": 6292,
+      "sha256": "c6824662876d53706051542bfe45a397f33728978845bca48e4396dedb2272ea",
+      "mtime_ns": 1785371662068280600
+    },
+    {
+      "path": "lab_tools_semantic.py",
+      "bytes": 6319,
+      "sha256": "7b96d077dbdabbd68836755de84361a230aa576b2571d77dd25a62fc6cf0643e",
+      "mtime_ns": 1785371662073362800
+    },
+    {
+      "path": "lab_tools_sop.py",
+      "bytes": 8651,
+      "sha256": "42379812d2005191539ed0a92885abbea9f6426fe9dac902079200f7ba7faac8",
+      "mtime_ns": 1785371662078362900
+    },
+    {
+      "path": "lab_tools_state.py",
+      "bytes": 21626,
+      "sha256": "5135e4d4f8cd848ababded5608b68ff72e18fd6b31cbf15f74c7533f6e77b0db",
+      "mtime_ns": 1785371662083363200
+    },
+    {
+      "path": "legacy_routes.py",
+      "bytes": 17599,
+      "sha256": "5c431f31a815d46f5d48b836ae8cc7cf54e6b12868442107f58cd07cbf0a1d19",
+      "mtime_ns": 1785371662088850900
+    },
+    {
+      "path": "pcmmad_lab_action_schema_ACTIVE.json",
+      "bytes": 483448,
+      "sha256": "f8bc648f3c1188a5e052d33a0ecad204d809f14cfbfa6dfb889f89bcb32a3434",
+      "mtime_ns": 1788316106827537200
+    },
+    {
+      "path": "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json",
+      "bytes": 115352,
+      "sha256": "b1e1273d960f9eb7ae149e8bbba635b83b4d4777d5a9b35250a4c7086c2ffb39",
+      "mtime_ns": 1785371662092984000
+    },
+    {
+      "path": "power_routes.py",
+      "bytes": 28951,
+      "sha256": "0cacaa2faa431efb647bd0562c65bd8fe0058fe3707ab5a1dee51fae8853747f",
+      "mtime_ns": 1785371662097988000
+    },
+    {
+      "path": "protocol_models.py",
+      "bytes": 7923,
+      "sha256": "db7749f8552babe30d61de8e65b24003d402a6bd5c827776fda2f90807c4c8ce",
+      "mtime_ns": 1785371662103345800
+    },
+    {
+      "path": "protocol_policy.py",
+      "bytes": 3527,
+      "sha256": "a25a164a917c46e837fd493088d2dab4e7503101a2298257b907842d6fe4ee59",
+      "mtime_ns": 1785371662108345800
+    },
+    {
+      "path": "protocol_store.py",
+      "bytes": 30095,
+      "sha256": "eaab635f918ad343c6705fba5b2adef5b619c646dc2ac4b680209ae2c2ba187c",
+      "mtime_ns": 1785371662113355900
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 54,
+      "sha256": "b9205bb517ef9ad38b6fe303c548bc0dad4afa2ed2afddcc42196c7197f57e37",
+      "mtime_ns": 1785371662117364400
+    },
+    {
+      "path": "research_arxiv.py",
+      "bytes": 6530,
+      "sha256": "42899e9da9a293c8cc79ca32ed91bbe7a0ec05f249566ad8365db66cd76bf7b7",
+      "mtime_ns": 1785371662123365100
+    },
+    {
+      "path": "research_config.py",
+      "bytes": 491,
+      "sha256": "73d8ea57ff89050de3eb90b05a28f6e02750e25b6dfbb9d9014a13f35baf5d1f",
+      "mtime_ns": 1785371662127363100
+    },
+    {
+      "path": "research_distill.py",
+      "bytes": 6129,
+      "sha256": "e318905088c489b97c58e26d570a54d6328596c0f68cce6dc16c4f63bbbd01b7",
+      "mtime_ns": 1785371662133372100
+    },
+    {
+      "path": "research_models.py",
+      "bytes": 7161,
+      "sha256": "218643bc6dcfe134082fabca31f56377f7d79801d4213402c55ccd4266ad4fd9",
+      "mtime_ns": 1785371662139370600
+    },
+    {
+      "path": "research_predator.py",
+      "bytes": 7899,
+      "sha256": "7f3263c9983abae65d88235d32c7dc9bd8c8bc995be9e78dbd9264b166269abc",
+      "mtime_ns": 1785371662145372300
+    },
+    {
+      "path": "research_routes.py",
+      "bytes": 5861,
+      "sha256": "db1df5871d911f24c7ca6ecb796238aee757dfad2289ecdfd9972a6239a10102",
+      "mtime_ns": 1785371662152622600
+    },
+    {
+      "path": "research_starmap.py",
+      "bytes": 4295,
+      "sha256": "a9ed73cc14a6d9043efb832ac37afbef04f26a10c038fbc42b8fb22627d45f22",
+      "mtime_ns": 1785518722814917300
+    },
+    {
+      "path": "runtime_config.py",
+      "bytes": 6579,
+      "sha256": "280b522aa522d8e9b8861624fc3289cf077b9beedf65c44f2e9d1552c4bcb2ac",
+      "mtime_ns": 1785371662164096800
+    },
+    {
+      "path": "server.py",
+      "bytes": 1989,
+      "sha256": "2deb04b4280038c6f99732afbb2fe5c15146abc4964afa0c726a5abdf9ed467a",
+      "mtime_ns": 1788316234994590400
+    },
+    {
+      "path": "server.py.bak.20260901_hud_autostart",
+      "bytes": 361,
+      "sha256": "e6c28add5a53f97b16af4db5fe1d4e84812db3618a26636ad6ea549549e1f241",
+      "mtime_ns": 1785371662169097900
+    },
+    {
+      "path": "server_hardening.py",
+      "bytes": 18350,
+      "sha256": "d241483e7fd697cbb22e48c2a3310ca2c780e1435dae13baee0ac853cb8ca03e",
+      "mtime_ns": 1785374656840925900
+    },
+    {
+      "path": "shared_core.py",
+      "bytes": 11120,
+      "sha256": "ed0c3ac5fd14c82f6270fc62827ea8f51ad37d9a0c63519d851bc725cfb6914b",
+      "mtime_ns": 1785371662179605700
+    },
+    {
+      "path": "sop_ingest.py",
+      "bytes": 31384,
+      "sha256": "bb4a0499fc09ae327316c1789d694731d8a179a80568247b1499ecaf5b05daa7",
+      "mtime_ns": 1785371662184635700
+    }
+  ]
+}

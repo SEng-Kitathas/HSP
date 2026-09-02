@@ -1,0 +1,147 @@
+{
+  "schema": "hsp-referent-registry/v0.1",
+  "as_of": "2026-09-02",
+  "authority": "PROJECT_IDENTITY_CORRECTION; RESEARCH_ONLY",
+  "entries": [
+    {
+      "referent_id": "HSP",
+      "canonical_name": "Holonic Software Paradigm",
+      "abbreviation": "HSP",
+      "kind": "paradigm",
+      "status": "ACTIVE",
+      "definition": "A software paradigm in which a qualified software whole may be lawfully reused as a part of a larger qualified whole.",
+      "authority": "research semantics; no production or promotion authority",
+      "forbidden_collapses": ["CSC", "HSP-DF", "Genome", "generic holonic branding"]
+    },
+    {
+      "referent_id": "PC",
+      "canonical_name": "Practical Coding",
+      "abbreviation": "PC",
+      "kind": "engineering method",
+      "status": "ACTIVE",
+      "definition": "Constrained semantic composition of the minimum needed capabilities until the requested consequence is lawful, followed by strong idiomatic embodiment in the host language.",
+      "authority": "method; earns no result without evidence",
+      "forbidden_collapses": ["CSC", "coding style guide", "automatic program synthesis"]
+    },
+    {
+      "referent_id": "CSC",
+      "canonical_name": "Code Slop Cleanup",
+      "abbreviation": "CSC",
+      "kind": "final hostile QA audit",
+      "status": "ACTIVE",
+      "definition": "A downstream audit for adherence to applicable coding standards, style, correctness, hygiene, packaging, tests, and assurance boundaries.",
+      "authority": "audit-only unless a project separately grants a gate",
+      "forbidden_collapses": ["constrained semantic composition", "HSP compiler", "architectural truth source", "runtime authority"]
+    },
+    {
+      "referent_id": "HSP-ROS",
+      "canonical_name": "HSP Research Operating System",
+      "abbreviation": "HSP-ROS",
+      "kind": "bounded research process",
+      "status": "ACTIVE_BOUNDED",
+      "definition": "The research operating surface used to pressure HSP hypotheses.",
+      "authority": "research-only"
+    },
+    {
+      "referent_id": "HSP-OARR",
+      "canonical_name": "HSP OARR",
+      "abbreviation": "HSP-OARR",
+      "kind": "adversarial research slice",
+      "status": "ACTIVE_BOUNDED",
+      "definition": "The Observe-Attack-Repair-Reattack adversarial slice used inside HSP research.",
+      "authority": "research-only"
+    },
+    {
+      "referent_id": "HSP-SC",
+      "canonical_name": "HSP Shadow Compiler",
+      "abbreviation": "HSP-SC",
+      "kind": "shadow research lane",
+      "status": "EXPERIMENTAL",
+      "definition": "A non-authoritative lane for testing whether explicit semantic obligations can guide host-language embodiment.",
+      "authority": "none over production or canon"
+    },
+    {
+      "referent_id": "HSP-DF",
+      "canonical_name": "HSP Document Frontier",
+      "abbreviation": "HSP-DF",
+      "kind": "bounded document evaluator",
+      "status": "ADVISORY_NARROWED",
+      "definition": "The narrow evaluate(doc) Pareto-frontier experiment. It lost to a simple greedy adaptive path in the repaired seven-rival sealer domain.",
+      "authority": "advisory only; must never be labeled HSP alone",
+      "aliases": ["historical HSP document-frontier lane"]
+    },
+    {
+      "referent_id": "CONSTRAINED_SEMANTIC_COMPOSITION",
+      "canonical_name": "constrained semantic composition",
+      "abbreviation": null,
+      "kind": "descriptive mechanism phrase",
+      "status": "ACTIVE_DESCRIPTIVE",
+      "definition": "The mechanism phrase used when describing Practical Coding.",
+      "authority": "descriptive",
+      "forbidden_abbreviations": ["CSC"]
+    },
+    {
+      "referent_id": "GENOME",
+      "canonical_name": "Genome",
+      "abbreviation": null,
+      "kind": "separate historical surface",
+      "status": "SEPARATE_UNRESOLVED",
+      "definition": "A distinct historical surface. No equivalence to HSP, PC, or CSC is established by this registry.",
+      "authority": "none in HSP v0"
+    },
+    {
+      "referent_id": "PDVER",
+      "canonical_name": "Probe, Derive, Verify, Embody, Recurse",
+      "abbreviation": "PDVER",
+      "kind": "engineering loop",
+      "status": "ACTIVE_ADJACENT",
+      "definition": "An adjacent iterative engineering loop; it is not an expansion of HSP or CSC.",
+      "authority": "method only"
+    }
+  ],
+  "errata": [
+    {
+      "erratum_id": "ERR-HSP-001",
+      "incorrect": "HSP means or is interchangeable with the document-frontier evaluator.",
+      "corrected": "HSP means Holonic Software Paradigm. The document evaluator is HSP-DF and is a narrowed advisory branch."
+    },
+    {
+      "erratum_id": "ERR-CSC-001",
+      "incorrect": "CSC means constrained semantic composition or supplies HSP's semantic compiler.",
+      "corrected": "CSC means Code Slop Cleanup and is downstream final QA. Write out constrained semantic composition."
+    },
+    {
+      "erratum_id": "ERR-PC-001",
+      "incorrect": "Practical Coding is a style doctrine or another name for CSC.",
+      "corrected": "Practical Coding is the composition-and-lowering method; CSC audits the resulting artifact afterward."
+    },
+    {
+      "erratum_id": "ERR-AUTH-001",
+      "incorrect": "HSP, PC, or CSC automatically grants runtime, production, promotion, or world-mutation authority.",
+      "corrected": "Authority must be explicit, current, referent-bound, and consequence-side checked."
+    }
+  ],
+  "invariants": [
+    "Every active abbreviation identifies at most one active referent.",
+    "CSC expands only to Code Slop Cleanup.",
+    "Constrained semantic composition has no CSC abbreviation.",
+    "HSP-DF is never shortened to HSP.",
+    "Genome remains separate unless later evidence explicitly earns a relation.",
+    "No method or audit label silently grants runtime, production, promotion, or world-mutation authority."
+  ],
+  "provenance": [
+    {
+      "source": "HSP_BOUNDED_SLICE_CHECKPOINT_V2_9_2026-08-17",
+      "sha256": "5b88f008e6f5aec31737f7c6dfcf3614376f8b7a4660fec03800260036079313",
+      "role": "mainline Pass 341-345 evidence"
+    },
+    {
+      "source": "HSP_TECHNICAL_SPECIFICATION_AND_RESEARCH_STATUS_2026-09-01.md",
+      "role": "corrected evidence-bounded synthesis"
+    },
+    {
+      "source": "RAHL_ENGINEERING_IN_HOUSE_SOP_SPLIT_CANDIDATE_R3_1_2026-08-29",
+      "role": "shadow-use process constraint; compression-only; R6 parent authority"
+    }
+  ]
+}

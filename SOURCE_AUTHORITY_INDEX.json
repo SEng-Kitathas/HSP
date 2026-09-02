@@ -1,0 +1,29 @@
+{
+  "schema": "hsp-source-authority-index/v1",
+  "as_of": "2026-09-02",
+  "current": {
+    "technical_specification": "current/HSP_TECHNICAL_SPECIFICATION_AND_RESEARCH_STATUS_2026-09-01.md",
+    "referent_registry": "current/hsp_v0/HSP_REFERENT_ERRATA_REGISTRY_V0_1.json",
+    "holon_contract": "current/hsp_v0/HSP_HOLON_CONTRACT_V0_1.md",
+    "status": "current interpretation and v0 research candidate; no production authority"
+  },
+  "mainline": {
+    "last_pass": 345,
+    "checkpoint": "mainline/HSP_BOUNDED_SLICE_CHECKPOINT_V2_9_2026-08-17(3).zip",
+    "checkpoint_sha256": "5b88f008e6f5aec31737f7c6dfcf3614376f8b7a4660fec03800260036079313",
+    "status": "last clean bounded paradigm/mechanism mainline checkpoint"
+  },
+  "experimental_lineage": {
+    "status": "evidence and donor mechanisms only; no silent mainline promotion",
+    "includes": ["Campaign 20", "F020-F022", "HSP R2/HSP-DF", "authority ladder", "selector/adaptive lane", "sealer/release/failure lane"]
+  },
+  "context": {
+    "status": "intent, archaeology, scars, and handoff context; subordinate to artifacts and observed outcomes"
+  },
+  "next_mainline_pass": 346,
+  "next_mainline_pass_status": "UNSPENT",
+  "excluded": [
+    {"surface": "CIC-NERV dogfood attempt", "reason": "user rejected target as stale before execution", "pass_consumed": false},
+    {"surface": "HSP-RX-ANYIO-001", "reason": "non-mainline reclassification", "pass_consumed": false}
+  ]
+}
