@@ -17,17 +17,19 @@ The machine-readable correction boundary is `current/hsp_v0/HSP_REFERENT_ERRATA_
 - Last clean mainline pass: **345**.
 - Canonical v2.9 checkpoint SHA-256: `5b88f008e6f5aec31737f7c6dfcf3614376f8b7a4660fec03800260036079313`.
 - HSP v0 holon contract: **research candidate only; no production authority**.
-- Pass 346: preregistered against the live PCMMAD Receiver bounded project-file read consequence; implementation arms have not started at this repository seed.
-- Preregistration v0.1 is retained as a stale-currentness scar. v0.2 is the current pre-arm freeze.
+- Pass 346: bounded project-file read dogfood completed under v0.2 with final verdict **NO WINNER**; both evaluator-green arms were rejected for clean promotion by CSC parent-evidence counterexamples.
+- Preregistration v0.1 remains a stale-currentness scar; v0.2 is the frozen experiment authority. Compact final evidence is mirrored under `experiments/pass346/results_2026-09-02/`.
 
-## Pass 346 current freeze
+## Pass 346 final result
 
 - Target: PCMMAD Receiver V29 Native Protocol Release Candidate — bounded project-file read consequence.
 - v0.2 frozen target tree SHA-256: `b27fd1a4e42bce1ad08af933026845083b0c577ca7e73b95301b76e9ae1b20af`.
 - v0.2 preregistration SHA-256: `5ffa5eb967c4b33c7dab83c289b1c716346b59b74b1b327e32ea13cb3d8181ac`.
-- Hidden evaluator commitment SHA-256: `afa6c7c06c66bf79127d0098b44ca49ffa1715e77b91107279e9f3d9e262b9cf` (payload intentionally not mirrored here before both arm seals).
+- Hidden evaluator SHA-256: `afa6c7c06c66bf79127d0098b44ca49ffa1715e77b91107279e9f3d9e262b9cf`; reveal occurred only after both initial seals.
+- Final replacement maintenance trees: A `b702382494803c2157dd87a4dacf45926099cf58bd5e2ca6031bb868d8fad4da`; B `2fa75e3f085f415e32ad131ae606d302192436d5ee4fd47896acfd060071a830`.
+- Both passed visible 6/6, withheld M3 9/9, hostile replay 5/5, and compile. CSC then found unresolved `read_many` evidence semantics in each arm, so the frozen adjudication is **NO WINNER** and no live promotion occurred.
 
-See `experiments/pass346/`.
+See `experiments/pass346/` and `experiments/pass346/results_2026-09-02/`.
 
 ## Repository policy
 

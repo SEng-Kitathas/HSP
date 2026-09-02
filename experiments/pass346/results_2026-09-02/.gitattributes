@@ -1,0 +1,3 @@
+# Exact-byte experiment evidence enclave: preserve source artifact hashes and EOLs verbatim.
+** binary
+.gitattributes text eol=lf

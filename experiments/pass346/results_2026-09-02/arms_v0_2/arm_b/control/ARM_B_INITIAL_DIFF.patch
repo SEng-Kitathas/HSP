@@ -1,0 +1,214 @@
+--- a/context_engine.py
++++ b/context_engine.py
+@@ -314,10 +314,18 @@
+ )
+ 
+ 
++def _path_is_within(root: Path, candidate: Path) -> bool:
++    try:
++        candidate.relative_to(root)
++        return True
++    except ValueError:
++        return False
++
++
+ def resolve_user_path(user_path: str, base_root: str | None = None) -> Path:
+     allowed_roots = get_allowed_roots()
+     root = Path(base_root).resolve() if base_root else allowed_roots[0]
+-    if not any(ar == root or ar in root.parents for ar in allowed_roots):
++    if not any(_path_is_within(ar, root) for ar in allowed_roots):
+         raise BadPathError("base_root is not an allowed root")
+     user_path = user_path or "."
+     candidate = (
+@@ -325,8 +333,9 @@
+         if not Path(user_path).is_absolute()
+         else Path(user_path).resolve()
+     )
+-    if not any(ar == candidate or ar in candidate.parents for ar in allowed_roots):
+-        raise BadPathError("resolved path escapes allowed roots")
++    authority_roots = (root,) if base_root else tuple(allowed_roots)
++    if not any(_path_is_within(ar, candidate) for ar in authority_roots):
++        raise BadPathError("resolved path escapes base_root" if base_root else "resolved path escapes allowed roots")
+     return candidate
+ 
+ 
+@@ -450,6 +459,13 @@
+     )
+ 
+ 
++def _bounded_utf8_text(text: str, max_bytes: int) -> str:
++    encoded = text.encode("utf-8")
++    if len(encoded) <= max_bytes:
++        return text
++    return encoded[:max_bytes].decode("utf-8", errors="ignore")
++
++
+ def read_file(request: FileReadRequest) -> FileReadResponse:
+     target = resolve_user_path(request.path, base_root=request.base_root)
+     if not target.exists() or not target.is_file():
+@@ -457,6 +473,8 @@
+     if target.suffix.lower() not in TEXT_EXTENSIONS:
+         raise BadPathError("file is not readable as text; use model/archive inspect")
+     raw = target.read_text(encoding="utf-8", errors="replace")
++    if request.max_bytes not in (None, 0, -1) and request.max_bytes < 0:
++        raise ValueError("max_bytes must be positive, 0, -1, or None")
+     max_bytes = (
+         MAX_READ_BYTES
+         if request.max_bytes in (None, 0, -1)
+@@ -465,15 +483,17 @@
+     lines = raw.splitlines()
+     total = len(lines)
+     if request.start_line is None and request.end_line is None:
+-        content = raw[:max_bytes]
++        selected = raw
+         rs = 1
++        re = min(total, selected.count("\n") + 1 if selected else 0)
++    else:
++        rs = max(1, request.start_line or 1)
++        requested_end = request.end_line if request.end_line is not None else rs + MAX_READ_LINES - 1
++        re = max(rs, min(total, requested_end))
++        selected = "\n".join(lines[rs - 1 : re])
++    content = _bounded_utf8_text(selected, max_bytes)
++    if request.start_line is None and request.end_line is None:
+         re = min(total, content.count("\n") + 1 if content else 0)
+-    else:
+-        start_line = max(1, request.start_line or 1)
+-        e = min(total, request.end_line or min(total, s + MAX_READ_LINES - 1))
+-        e = max(e, s)
+-        content = "\n".join(lines[s - 1 : e])[:max_bytes]
+-        rs, re = s, e
+     return FileReadResponse(
+         ok=True,
+         file=_file_item(_safe_stat(target)),
+--- a/lab_tools_project.py
++++ b/lab_tools_project.py
+@@ -11,7 +11,7 @@
+ 
+ JsonObject = MutableMapping[str, Any]
+ 
+-from context_engine import FileListRequest
++from context_engine import ContextPlaneError, FileListRequest, FileReadRequest
+ 
+ ToolPayload: TypeAlias = JsonObject
+ ToolResult: TypeAlias = JsonObject
+@@ -276,10 +276,14 @@
+     def from_read_result(cls, result: object) -> "ReadManyFileEntry":
+         as_dict = result.to_dict() if hasattr(result, "to_dict") else result
+         data = as_dict if isinstance(as_dict, dict) else {}
+-        return cls(
+-            content=_get_str(data, "content"),
+-            size_bytes=_get_int(data, "size_bytes", 0),
+-            truncated=_get_bool(data, "truncated", False),
++        content = _get_str(data, "content")
++        returned_size = len(content.encode("utf-8"))
++        file_data = data.get("file") if isinstance(data.get("file"), dict) else {}
++        source_size = _get_int(file_data, "size_bytes", returned_size)
++        return cls(
++            content=content,
++            size_bytes=returned_size,
++            truncated=returned_size < source_size,
+         )
+ 
+     @classmethod
+@@ -719,7 +723,7 @@
+             FileReadRequest(path=path, base_root=str(root), max_bytes=request.max_bytes_each)
+         )
+         return path, ReadManyFileEntry.from_read_result(result).to_dict(), False
+-    except (OSError, RuntimeError, ValueError, TypeError, UnicodeError) as exc:
++    except (ContextPlaneError, OSError, RuntimeError, ValueError, TypeError, UnicodeError) as exc:
+         return path, ReadManyFileEntry.from_error(exc).to_dict(), True
+ 
+ 
+--- /dev/null
++++ b/tests/test_hsp_bounded_read_contract.py
+@@ -0,0 +1,90 @@
++from __future__ import annotations
++
++import shutil
++import tempfile
++import unittest
++from pathlib import Path
++from types import SimpleNamespace
++
++import context_engine as ce
++import lab_tools_project as ltp
++
++
++class HspBoundedReadContractTests(unittest.TestCase):
++    def setUp(self) -> None:
++        self.workspace = Path(tempfile.mkdtemp(prefix="hsp346_arm_b_", dir=str(Path(__file__).resolve().parents[2])))
++        self.root = self.workspace / "project"
++        self.root.mkdir()
++        (self.root / "sample.txt").write_text("alpha\nbéta\ngamma\n", encoding="utf-8")
++        (self.root / "utf8.txt").write_text("ééé", encoding="utf-8")
++        (self.root / "blob.bin").write_bytes(b"abc")
++        (self.workspace / "outside.txt").write_text("outside", encoding="utf-8")
++        self.old_roots = ce.get_allowed_roots
++        ce.get_allowed_roots = lambda: [self.workspace.resolve()]
++
++    def tearDown(self) -> None:
++        ce.get_allowed_roots = self.old_roots
++        shutil.rmtree(self.workspace, ignore_errors=True)
++
++    def test_line_window_is_exactly_1_based_inclusive(self) -> None:
++        r = ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), start_line=2, end_line=2, max_bytes=100))
++        self.assertTrue(r.ok)
++        self.assertEqual("béta", r.content)
++        self.assertEqual((2, 2), (r.slice.start_line, r.slice.end_line))
++
++    def test_utf8_ceiling_holds_at_multibyte_boundaries(self) -> None:
++        expected = {1:"", 2:"é", 3:"é", 4:"éé", 5:"éé", 6:"ééé"}
++        for budget, content in expected.items():
++            with self.subTest(budget=budget):
++                r = ce.read_file(ce.FileReadRequest(path="utf8.txt", base_root=str(self.root), max_bytes=budget))
++                self.assertEqual(content, r.content)
++                self.assertLessEqual(len(r.content.encode("utf-8")), budget)
++
++    def test_full_read_control_preserves_content(self) -> None:
++        r = ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), max_bytes=1000))
++        self.assertEqual("alpha\nbéta\ngamma\n", r.content)
++
++    def test_exact_project_root_is_authority_boundary(self) -> None:
++        for path in ("../outside.txt", str((self.workspace / "outside.txt").resolve())):
++            with self.subTest(path=path), self.assertRaises(ce.BadPathError):
++                ce.read_file(ce.FileReadRequest(path=path, base_root=str(self.root), max_bytes=100))
++
++    def test_parent_single_read_requalifies_core_result(self) -> None:
++        dep = SimpleNamespace(
++            normalize_project_path=lambda payload: str(payload.get("path", "")),
++            project_root_path=lambda project_id: str(self.root),
++            context_wrap=lambda thunk: thunk(),
++            read_file=ce.read_file,
++        )
++        r = ltp._project_files_read_payload({"project_id":"B", "path":"sample.txt", "start_line":2, "end_line":2, "max_bytes":100}, dep)
++        data = r.to_dict() if hasattr(r, "to_dict") else r
++        self.assertTrue(data["ok"])
++        self.assertEqual("béta", data["content"])
++
++    def test_read_many_preserves_failure_and_truthful_success_metadata(self) -> None:
++        dep = SimpleNamespace(error_cls=RuntimeError, get_project_root=lambda project_id:self.root, read_file=ce.read_file)
++        r = ltp._project_read_many_payload({"project_id":"B", "paths":["sample.txt","missing.txt"], "max_bytes_each":5}, dep)
++        self.assertEqual((1,1), (r["read_count"], r["error_count"]))
++        good = r["files"]["sample.txt"]
++        bad = r["files"]["missing.txt"]
++        self.assertEqual("alpha", good["content"])
++        self.assertEqual(5, good["size_bytes"])
++        self.assertTrue(good["truncated"])
++        self.assertIn("error", bad)
++
++    def test_unsupported_nontext_path_is_rejected(self) -> None:
++        with self.assertRaises(ce.BadPathError):
++            ce.read_file(ce.FileReadRequest(path="blob.bin", base_root=str(self.root), max_bytes=100))
++
++    def test_eof_range_is_bounded_and_nonexceptional(self) -> None:
++        r = ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), start_line=99, end_line=120, max_bytes=100))
++        self.assertEqual("", r.content)
++        self.assertEqual(99, r.slice.start_line)
++
++    def test_invalid_negative_budget_is_not_laundered_into_success(self) -> None:
++        with self.assertRaises(ValueError):
++            ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), max_bytes=-2))
++
++
++if __name__ == "__main__":
++    unittest.main()

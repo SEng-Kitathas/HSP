@@ -1,0 +1,40 @@
+{
+  "schema_version": "HSP-P346-HIDDEN-1",
+  "seed": "0ff48dcd9c6f746b0430bfe15514c2ac68a662451a8ea1aa35d1bd0c1b744873",
+  "do_not_expose_to_implementation_arms": true,
+  "maintenance_task": {
+    "id": "M3",
+    "task": "Add an optional tail_lines request mode that returns the final N logical lines while still obeying the byte ceiling and existing path authority."
+  },
+  "hostile_cases": [
+    {
+      "id": "H-ALIAS-BYTE",
+      "class": "alias_referent_drift",
+      "sample": "Ωß中",
+      "max_bytes": 9,
+      "assertion": "returned content UTF-8 byte length MUST NOT exceed max_bytes; byte never means Python character count"
+    },
+    {
+      "id": "H-RANGE",
+      "class": "partial_outcome",
+      "start_line": 3,
+      "end_line": 5,
+      "assertion": "1-based inclusive window succeeds without 5xx/internal exception and reports the returned window coherently"
+    },
+    {
+      "id": "H-FALLBACK",
+      "class": "retry_fallback_pressure",
+      "assertion": "mixed read_many input preserves per-file failure as failure and does not manufacture success for the failed entry"
+    },
+    {
+      "id": "H-EVIDENCE",
+      "class": "evidence_loss",
+      "assertion": "a green core-engine check alone is insufficient; at least one parent integration surface must independently exercise the consequence"
+    },
+    {
+      "id": "H-STALE-AUTH",
+      "class": "stale_authority",
+      "assertion": "evaluation must bind to the frozen target tree hash and reject results produced from different unacknowledged bytes"
+    }
+  ]
+}

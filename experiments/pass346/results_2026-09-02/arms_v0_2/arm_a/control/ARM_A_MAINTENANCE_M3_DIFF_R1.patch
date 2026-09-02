@@ -1,0 +1,144 @@
+--- pre/api_wire_context.py
++++ post/api_wire_context.py
+@@ -355,6 +355,7 @@
+ class ProjectFilesReadRequest(ProjectPathRequest):
+     start_line: int | None = None
+     end_line: int | None = None
++    tail_lines: int | None = None
+     max_bytes: int | None = None
+ 
+     @classmethod
+@@ -365,6 +366,7 @@
+             path=base.path,
+             start_line=data.get("start_line"),
+             end_line=data.get("end_line"),
++            tail_lines=data.get("tail_lines"),
+             max_bytes=data.get("max_bytes"),
+         )
+ 
+--- pre/context_engine.py
++++ post/context_engine.py
+@@ -71,6 +71,7 @@
+     base_root: str | None = None
+     start_line: int | None = None
+     end_line: int | None = None
++    tail_lines: int | None = None
+     max_bytes: int | None = None
+ 
+ 
+@@ -473,7 +474,17 @@
+     )
+     lines = raw.splitlines()
+     total = len(lines)
+-    if request.start_line is None and request.end_line is None:
++    if request.tail_lines is not None:
++        if request.start_line is not None or request.end_line is not None:
++            raise ValueError("tail_lines cannot be combined with start_line or end_line")
++        if request.tail_lines <= 0:
++            raise ValueError("tail_lines must be a positive integer")
++        count = min(request.tail_lines, total)
++        rs = max(1, total - count + 1) if total else 1
++        re = total
++        selected = "\n".join(lines[-count:]) if count else ""
++        content = _truncate_utf8_bytes(selected, max_bytes)
++    elif request.start_line is None and request.end_line is None:
+         content = _truncate_utf8_bytes(raw, max_bytes)
+         rs = 1
+         re = min(total, content.count("\n") + 1 if content else 0)
+--- pre/context_routes.py
++++ post/context_routes.py
+@@ -146,6 +146,7 @@
+                     base_root=project_root_path(req.project_id),
+                     start_line=req.start_line,
+                     end_line=req.end_line,
++                    tail_lines=req.tail_lines,
+                     max_bytes=req.max_bytes,
+                 )
+             ).to_dict()
+--- pre/lab_tools_project.py
++++ post/lab_tools_project.py
+@@ -111,6 +111,7 @@
+     path: str
+     start_line: int | None
+     end_line: int | None
++    tail_lines: int | None
+     max_bytes: int | None
+ 
+     @classmethod
+@@ -122,6 +123,7 @@
+             path=normalize_project_path(payload),
+             start_line=_optional_positive_int(payload, "start_line"),
+             end_line=_optional_positive_int(payload, "end_line"),
++            tail_lines=_optional_positive_int(payload, "tail_lines"),
+             max_bytes=_optional_positive_int(payload, "max_bytes"),
+         )
+ 
+@@ -537,6 +539,7 @@
+                 base_root=dep.project_root_path(request.project_id),
+                 start_line=request.start_line,
+                 end_line=request.end_line,
++                tail_lines=request.tail_lines,
+                 max_bytes=request.max_bytes,
+             )
+         )
+--- pre/pcmmad_lab_action_schema_ACTIVE.json
++++ post/pcmmad_lab_action_schema_ACTIVE.json
+@@ -1641,6 +1641,11 @@
+                                                                                                            "type":  "integer",
+                                                                                                            "minimum":  1
+                                                                                                        },
++                                                                                          "tail_lines":  {
++                                                                                            "type":  "integer",
++                                                                                            "minimum":  1,
++                                                                                            "description":  "Alternative line-selection mode: return the final N logical lines; cannot be combined with start_line/end_line."
++                                                                                          },
+                                                                                           "max_bytes":  {
+                                                                                                             "type":  "integer",
+                                                                                                             "minimum":  0,
+--- pre/pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json
++++ post/pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json
+@@ -1641,6 +1641,11 @@
+             "type": "integer",
+             "minimum": 1
+           },
++          "tail_lines": {
++            "type": "integer",
++            "minimum": 1,
++            "description": "Alternative line-selection mode: return the final N logical lines; cannot be combined with start_line/end_line."
++          },
+           "max_bytes": {
+             "type": "integer",
+             "minimum": 0,
+--- pre/tests/test_bounded_project_read.py
++++ post/tests/test_bounded_project_read.py
+@@ -63,6 +63,30 @@
+         self.assertNotIn("error", result["files"]["sample.txt"])
+         self.assertIn("error", result["files"]["missing.txt"])
+ 
++    def test_tail_lines_mode_obeys_byte_budget(self) -> None:
++        full_tail = ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), tail_lines=2, max_bytes=100))
++        self.assertEqual("béta\ngamma", full_tail.content)
++        self.assertEqual((2, 3), (full_tail.slice.start_line, full_tail.slice.end_line))
++        bounded_tail = ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), tail_lines=2, max_bytes=8))
++        self.assertEqual("béta\nga", bounded_tail.content)
++        self.assertLessEqual(len(bounded_tail.content.encode("utf-8")), 8)
++
++    def test_tail_lines_rejects_ambiguous_window(self) -> None:
++        with self.assertRaises(ValueError):
++            ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), start_line=1, tail_lines=2, max_bytes=100))
++
++    def test_parent_tail_lines_surface(self) -> None:
++        dep = SimpleNamespace(
++            normalize_project_path=lambda payload: str(payload.get("path", "")),
++            project_root_path=lambda project_id: str(self.root),
++            context_wrap=lambda thunk: thunk(),
++            read_file=ce.read_file,
++        )
++        result = ltp._project_files_read_payload({"project_id":"A", "path":"sample.txt", "tail_lines":2, "max_bytes":100}, dep)
++        data = result.to_dict() if hasattr(result, "to_dict") else result
++        self.assertEqual("béta\ngamma", data["content"])
++        self.assertEqual((2, 3), (data["slice"]["start_line"], data["slice"]["end_line"]))
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

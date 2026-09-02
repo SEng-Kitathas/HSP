@@ -1,0 +1,172 @@
+--- pre/api_wire_context.py
++++ post/api_wire_context.py
+@@ -355,6 +355,7 @@
+ class ProjectFilesReadRequest(ProjectPathRequest):
+     start_line: int | None = None
+     end_line: int | None = None
++    tail_lines: int | None = None
+     max_bytes: int | None = None
+ 
+     @classmethod
+@@ -365,6 +366,7 @@
+             path=base.path,
+             start_line=data.get("start_line"),
+             end_line=data.get("end_line"),
++            tail_lines=data.get("tail_lines"),
+             max_bytes=data.get("max_bytes"),
+         )
+ 
+--- pre/context_engine.py
++++ post/context_engine.py
+@@ -71,6 +71,7 @@
+     base_root: str | None = None
+     start_line: int | None = None
+     end_line: int | None = None
++    tail_lines: int | None = None
+     max_bytes: int | None = None
+ 
+ 
+@@ -482,7 +483,16 @@
+     )
+     lines = raw.splitlines()
+     total = len(lines)
+-    if request.start_line is None and request.end_line is None:
++    if request.tail_lines is not None:
++        if request.start_line is not None or request.end_line is not None:
++            raise ValueError("tail_lines cannot be combined with start_line or end_line")
++        if request.tail_lines <= 0:
++            raise ValueError("tail_lines must be a positive integer")
++        count = min(request.tail_lines, total)
++        rs = max(1, total - count + 1) if total else 1
++        re = total
++        selected = "\n".join(lines[-count:]) if count else ""
++    elif request.start_line is None and request.end_line is None:
+         selected = raw
+         rs = 1
+         re = min(total, selected.count("\n") + 1 if selected else 0)
+@@ -492,7 +502,7 @@
+         re = max(rs, min(total, requested_end))
+         selected = "\n".join(lines[rs - 1 : re])
+     content = _bounded_utf8_text(selected, max_bytes)
+-    if request.start_line is None and request.end_line is None:
++    if request.tail_lines is None and request.start_line is None and request.end_line is None:
+         re = min(total, content.count("\n") + 1 if content else 0)
+     return FileReadResponse(
+         ok=True,
+--- pre/context_routes.py
++++ post/context_routes.py
+@@ -146,6 +146,7 @@
+                     base_root=project_root_path(req.project_id),
+                     start_line=req.start_line,
+                     end_line=req.end_line,
++                    tail_lines=req.tail_lines,
+                     max_bytes=req.max_bytes,
+                 )
+             ).to_dict()
+--- pre/lab_tools_project.py
++++ post/lab_tools_project.py
+@@ -111,6 +111,7 @@
+     path: str
+     start_line: int | None
+     end_line: int | None
++    tail_lines: int | None
+     max_bytes: int | None
+ 
+     @classmethod
+@@ -122,6 +123,7 @@
+             path=normalize_project_path(payload),
+             start_line=_optional_positive_int(payload, "start_line"),
+             end_line=_optional_positive_int(payload, "end_line"),
++            tail_lines=_optional_positive_int(payload, "tail_lines"),
+             max_bytes=_optional_positive_int(payload, "max_bytes"),
+         )
+ 
+@@ -541,6 +543,7 @@
+                 base_root=dep.project_root_path(request.project_id),
+                 start_line=request.start_line,
+                 end_line=request.end_line,
++                tail_lines=request.tail_lines,
+                 max_bytes=request.max_bytes,
+             )
+         )
+--- pre/pcmmad_lab_action_schema_ACTIVE.json
++++ post/pcmmad_lab_action_schema_ACTIVE.json
+@@ -1641,6 +1641,11 @@
+                                                                                                            "type":  "integer",
+                                                                                                            "minimum":  1
+                                                                                                        },
++                                                                                          "tail_lines":  {
++                                                                                            "type":  "integer",
++                                                                                            "minimum":  1,
++                                                                                            "description":  "Alternative line-selection mode: return the final N logical lines; cannot be combined with start_line/end_line."
++                                                                                          },
+                                                                                           "max_bytes":  {
+                                                                                                             "type":  "integer",
+                                                                                                             "minimum":  0,
+--- pre/pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json
++++ post/pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json
+@@ -1641,6 +1641,11 @@
+             "type": "integer",
+             "minimum": 1
+           },
++          "tail_lines": {
++            "type": "integer",
++            "minimum": 1,
++            "description": "Alternative line-selection mode: return the final N logical lines; cannot be combined with start_line/end_line."
++          },
+           "max_bytes": {
+             "type": "integer",
+             "minimum": 0,
+--- pre/tests/test_hsp_bounded_read_contract.py
++++ post/tests/test_hsp_bounded_read_contract.py
+@@ -7,6 +7,7 @@
+ from types import SimpleNamespace
+ 
+ import context_engine as ce
++import api_wire_context as awc
+ import lab_tools_project as ltp
+ 
+ 
+@@ -85,6 +86,42 @@
+         with self.assertRaises(ValueError):
+             ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), max_bytes=-2))
+ 
++    def test_tail_lines_selects_final_logical_lines_then_applies_byte_ceiling(self) -> None:
++        full = ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), tail_lines=2, max_bytes=100))
++        self.assertEqual("béta\ngamma", full.content)
++        self.assertEqual((2, 3), (full.slice.start_line, full.slice.end_line))
++        bounded = ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), tail_lines=2, max_bytes=8))
++        self.assertEqual("béta\nga", bounded.content)
++        self.assertLessEqual(len(bounded.content.encode("utf-8")), 8)
++
++    def test_tail_lines_is_exclusive_with_explicit_window(self) -> None:
++        with self.assertRaises(ValueError):
++            ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), start_line=1, tail_lines=2, max_bytes=100))
++
++    def test_tail_lines_parent_lab_surface_requalifies_mode(self) -> None:
++        dep = SimpleNamespace(
++            normalize_project_path=lambda payload: str(payload.get("path", "")),
++            project_root_path=lambda project_id: str(self.root),
++            context_wrap=lambda thunk: thunk(),
++            read_file=ce.read_file,
++        )
++        r = ltp._project_files_read_payload({"project_id":"B", "path":"sample.txt", "tail_lines":2, "max_bytes":100}, dep)
++        data = r.to_dict() if hasattr(r, "to_dict") else r
++        self.assertEqual("béta\ngamma", data["content"])
++        self.assertEqual((2, 3), (data["slice"]["start_line"], data["slice"]["end_line"]))
++
++    def test_tail_lines_wire_and_imported_schema_exposure(self) -> None:
++        req = awc.ProjectFilesReadRequest.from_json({"project_id":"B", "path":"sample.txt", "tail_lines":2, "max_bytes":100})
++        self.assertEqual(2, req.tail_lines)
++        target_root = Path(__file__).resolve().parents[1]
++        import json
++        for name in ("pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json", "pcmmad_lab_action_schema_ACTIVE.json"):
++            schema = json.loads((target_root / name).read_text(encoding="utf-8-sig"))
++            prop = schema["components"]["schemas"]["ProjectFilesReadRequest"]["properties"]["tail_lines"]
++            self.assertEqual("integer", prop["type"])
++            self.assertEqual(1, prop["minimum"])
++            self.assertFalse(schema["components"]["schemas"]["ProjectFilesReadRequest"]["additionalProperties"])
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

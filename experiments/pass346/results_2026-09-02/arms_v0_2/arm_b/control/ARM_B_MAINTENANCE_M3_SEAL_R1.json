@@ -1,0 +1,50 @@
+{
+  "arm": "B",
+  "task": "M3 tail_lines",
+  "status": "replacement final maintenance seal",
+  "supersedes_invalid_seal_sha256": "08e2fe31b2f456688d273ee1bd8376eb3e624e9f2460754be6b8efab85a32b6d",
+  "supersession_reason": "prior green M3 seal normalized 4,568 CRLFs in ACTIVE action schema; semantics green but byte-clean artifact preservation failed",
+  "starting_initial_seal_tree_sha256": "89a5b76a09dba0165fbbb2555f55468bf4ac0b4d6836ca42efb665ddb06de60c",
+  "ending_maintenance_tree_sha256": "2fa75e3f085f415e32ad131ae606d302192436d5ee4fd47896acfd060071a830",
+  "primary_maintenance_wall_seconds_before_artifact_repair": 57.215,
+  "artifact_preservation_repair_iterations": 1,
+  "files_changed": [
+    "api_wire_context.py",
+    "context_engine.py",
+    "context_routes.py",
+    "lab_tools_project.py",
+    "pcmmad_lab_action_schema_ACTIVE.json",
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json",
+    "tests/test_hsp_bounded_read_contract.py"
+  ],
+  "files_added": [],
+  "files_missing": [],
+  "python_loc_added": 18,
+  "python_loc_deleted": 2,
+  "test_loc_added": 37,
+  "test_loc_deleted": 0,
+  "schema_config_lines_added": 10,
+  "schema_config_lines_deleted": 0,
+  "schema_byte_preservation": {
+    "ACTIVE_initial_sha256": "f8bc648f3c1188a5e052d33a0ecad204d809f14cfbfa6dfb889f89bcb32a3434",
+    "ACTIVE_final_sha256": "df189d32a877bcd4bcda714857b48cd1fe0d117b4aa16319a8e8a82e5290a12d",
+    "initial_CRLF": 4568,
+    "final_CRLF": 4573,
+    "insertion_only_reconstruction_verified": true
+  },
+  "arm_tests": "13/13 PASS",
+  "visible_evaluator": "6/6 PASS",
+  "maintenance_M3_evaluator": "9/9 PASS",
+  "original_hidden_hostile_replay": "5/5 PASS",
+  "compileall": "PASS",
+  "diff_sha256": "018b810639277e49f99d8ee6437f5f5cf3eefeb62759ab3cb81569492ff34565",
+  "diff_bytes": 8288,
+  "hidden_evaluator_revealed_before_initial_seal": false,
+  "residual_nonclaims": [
+    "isolated experiment candidate only",
+    "live receiver not mutated",
+    "no atomic filesystem snapshot claim",
+    "no general HSP proof"
+  ],
+  "maintenance_contract_sha256": "853082db65f981782137d3dd103fdf10449a9ae1dd743620ca7d815ab99bebfc"
+}

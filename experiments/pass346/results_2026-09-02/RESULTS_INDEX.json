@@ -1,0 +1,122 @@
+{
+  "status": "Pass 346 final evidence mirror",
+  "source_project": "E:\\new pc\\AI_Pushes_Sandbox\\projects\\hsp-pass346-prereg-pcmmad-bounded-read",
+  "full_arm_trees_mirrored": false,
+  "note": "Full isolated arm trees remain in local experiment workspace; this Git mirror stores compact audit/reproduction evidence.",
+  "artifacts": [
+    {
+      "source": "PASS346_FINAL_ADJUDICATION_2026-09-02.md",
+      "mirror": "PASS346_FINAL_ADJUDICATION_2026-09-02.md",
+      "bytes": 9083,
+      "sha256": "4ab3cce22a37c46fe72d61b3cb70d33244b1b1b4744f9c564ae509d34abb08e6"
+    },
+    {
+      "source": "evaluator/CSC_QA_REPORT_2026-09-02.md",
+      "mirror": "evaluator/CSC_QA_REPORT_2026-09-02.md",
+      "bytes": 5930,
+      "sha256": "7ee06e9ba6b5f3891fae81c15601d9001852ef2c1292c1eb12df5acb4303d985"
+    },
+    {
+      "source": "evaluator/M3_SEAL_SUPERSESSION_NOTE_2026-09-02.md",
+      "mirror": "evaluator/M3_SEAL_SUPERSESSION_NOTE_2026-09-02.md",
+      "bytes": 1660,
+      "sha256": "4f5b1dc66251b9954c7d362ac74c409ee73d89eb02dd721ed68eda372e9f5aed"
+    },
+    {
+      "source": "evaluator/HIDDEN_PERTURBATIONS.json",
+      "mirror": "evaluator/HIDDEN_PERTURBATIONS.json",
+      "bytes": 1547,
+      "sha256": "afa6c7c06c66bf79127d0098b44ca49ffa1715e77b91107279e9f3d9e262b9cf"
+    },
+    {
+      "source": "evaluator/HIDDEN_EVALUATOR_RUNNER_V0_1.py",
+      "mirror": "evaluator/HIDDEN_EVALUATOR_RUNNER_V0_1.py",
+      "bytes": 5224,
+      "sha256": "2519bbbfa211937d2a2b4794f3c55cf4df313cf9b889df36909e741b19f20c27"
+    },
+    {
+      "source": "evaluator/MAINTENANCE_M3_EVALUATOR_V0_1.py",
+      "mirror": "evaluator/MAINTENANCE_M3_EVALUATOR_V0_1.py",
+      "bytes": 7465,
+      "sha256": "0454a335436225867ac5fd69aab35f0a9865f776d55b21484e416f78a9c31087"
+    },
+    {
+      "source": "arms_v0_2/arm_a/control/ARM_A_INITIAL_SEAL.json",
+      "mirror": "arms_v0_2/arm_a/control/ARM_A_INITIAL_SEAL.json",
+      "bytes": 1172,
+      "sha256": "4f1a77b669fe47b836a20cf164f6a907cce8456ad1088e87b7327ed43fea9afb"
+    },
+    {
+      "source": "arms_v0_2/arm_a/control/ARM_A_INITIAL_DIFF.patch",
+      "mirror": "arms_v0_2/arm_a/control/ARM_A_INITIAL_DIFF.patch",
+      "bytes": 6510,
+      "sha256": "91e0eb3138c7366767ae35af7bc0b4ef59785c905a32f406b2734a382cbd9e2d"
+    },
+    {
+      "source": "arms_v0_2/arm_a/control/ARM_A_MAINTENANCE_M3_SEAL.json",
+      "mirror": "arms_v0_2/arm_a/control/ARM_A_MAINTENANCE_M3_SEAL.json",
+      "bytes": 1274,
+      "sha256": "37ffe17cefd1f089e335b08d454ea6ba5f3a0375d1591e5967e287534361e92c"
+    },
+    {
+      "source": "arms_v0_2/arm_a/control/ARM_A_MAINTENANCE_M3_SEAL_R1.json",
+      "mirror": "arms_v0_2/arm_a/control/ARM_A_MAINTENANCE_M3_SEAL_R1.json",
+      "bytes": 2045,
+      "sha256": "015c2340ddc2948edaa1cbd5b4f21018a248e8a654d2cb979dccb3d0c5a5c4ad"
+    },
+    {
+      "source": "arms_v0_2/arm_a/control/ARM_A_MAINTENANCE_M3_DIFF_R1.patch",
+      "mirror": "arms_v0_2/arm_a/control/ARM_A_MAINTENANCE_M3_DIFF_R1.patch",
+      "bytes": 6857,
+      "sha256": "50e3909619bf7cf45d78947273d836585be4b9fb28a54b3cc09ebc008fd484d1"
+    },
+    {
+      "source": "arms_v0_2/arm_b/control/ARM_B_BOUNDED_READ_HOLON_CONTRACT_PRE_IMPLEMENTATION.md",
+      "mirror": "arms_v0_2/arm_b/control/ARM_B_BOUNDED_READ_HOLON_CONTRACT_PRE_IMPLEMENTATION.md",
+      "bytes": 10010,
+      "sha256": "0ae30bdb4695f6514ad1590715d23f60eb12aa56f5ac042d5b03e13803ad4501"
+    },
+    {
+      "source": "arms_v0_2/arm_b/control/ARM_B_BOUNDED_READ_HOLON_CONTRACT_EMBODIED.md",
+      "mirror": "arms_v0_2/arm_b/control/ARM_B_BOUNDED_READ_HOLON_CONTRACT_EMBODIED.md",
+      "bytes": 2623,
+      "sha256": "45bf5fbd3713ecbc2c2f112bc1376a8b53d29faf469f52924c9374d134c0bfc5"
+    },
+    {
+      "source": "arms_v0_2/arm_b/control/ARM_B_MAINTENANCE_M3_CONTRACT_PRE_IMPLEMENTATION.md",
+      "mirror": "arms_v0_2/arm_b/control/ARM_B_MAINTENANCE_M3_CONTRACT_PRE_IMPLEMENTATION.md",
+      "bytes": 3992,
+      "sha256": "853082db65f981782137d3dd103fdf10449a9ae1dd743620ca7d815ab99bebfc"
+    },
+    {
+      "source": "arms_v0_2/arm_b/control/ARM_B_INITIAL_SEAL.json",
+      "mirror": "arms_v0_2/arm_b/control/ARM_B_INITIAL_SEAL.json",
+      "bytes": 1451,
+      "sha256": "4b59e5a846c5866d7b3153e683b5e0801cdc3726b1d84c109fea446282211e41"
+    },
+    {
+      "source": "arms_v0_2/arm_b/control/ARM_B_INITIAL_DIFF.patch",
+      "mirror": "arms_v0_2/arm_b/control/ARM_B_INITIAL_DIFF.patch",
+      "bytes": 9539,
+      "sha256": "a2263805557715aabc146b08596e39957132de9d2f4dc6f2b726ebb2e6935a6c"
+    },
+    {
+      "source": "arms_v0_2/arm_b/control/ARM_B_MAINTENANCE_M3_SEAL.json",
+      "mirror": "arms_v0_2/arm_b/control/ARM_B_MAINTENANCE_M3_SEAL.json",
+      "bytes": 1517,
+      "sha256": "08e2fe31b2f456688d273ee1bd8376eb3e624e9f2460754be6b8efab85a32b6d"
+    },
+    {
+      "source": "arms_v0_2/arm_b/control/ARM_B_MAINTENANCE_M3_SEAL_R1.json",
+      "mirror": "arms_v0_2/arm_b/control/ARM_B_MAINTENANCE_M3_SEAL_R1.json",
+      "bytes": 2153,
+      "sha256": "d9927501597ac88ac1bfd5a527b247c1d45b79c1428524ba5ae8d1c4e0f17657"
+    },
+    {
+      "source": "arms_v0_2/arm_b/control/ARM_B_MAINTENANCE_M3_DIFF_R1.patch",
+      "mirror": "arms_v0_2/arm_b/control/ARM_B_MAINTENANCE_M3_DIFF_R1.patch",
+      "bytes": 8288,
+      "sha256": "018b810639277e49f99d8ee6437f5f5cf3eefeb62759ab3cb81569492ff34565"
+    }
+  ]
+}

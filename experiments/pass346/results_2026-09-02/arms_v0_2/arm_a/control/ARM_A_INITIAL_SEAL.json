@@ -1,0 +1,36 @@
+{
+  "arm": "A",
+  "method": "strong conventional idiomatic Python",
+  "start_unix": 1788361927.6628988,
+  "end_unix": 1788361995.0939243,
+  "implementation_wall_seconds": 67.431,
+  "starting_frozen_tree_sha256": "b27fd1a4e42bce1ad08af933026845083b0c577ca7e73b95301b76e9ae1b20af",
+  "ending_adjudication_tree_sha256": "1f43febf225a890ea45ee1a11c00ee3beef7a5ff320f911083d0d2ad4924b285",
+  "files_changed": [
+    "context_engine.py",
+    "lab_tools_project.py"
+  ],
+  "files_added": [
+    "tests/test_bounded_project_read.py"
+  ],
+  "files_missing": [],
+  "source_loc_added": 20,
+  "source_loc_deleted": 9,
+  "test_loc_added": 68,
+  "test_loc_deleted": 0,
+  "new_permanent_helpers": [
+    "_truncate_utf8_bytes"
+  ],
+  "visible_evaluator": "6/6 PASS",
+  "arm_regression_tests": "5/5 PASS",
+  "compileall": "PASS",
+  "hidden_evaluator_revealed": false,
+  "cross_arm_artifacts_read": false,
+  "residual_nonclaims": [
+    "no atomic snapshot under concurrent mutation",
+    "UTF-8-with-replacement incumbent decode retained",
+    "not production-readiness evidence"
+  ],
+  "diff_sha256": "91e0eb3138c7366767ae35af7bc0b4ef59785c905a32f406b2734a382cbd9e2d",
+  "diff_bytes": 6510
+}

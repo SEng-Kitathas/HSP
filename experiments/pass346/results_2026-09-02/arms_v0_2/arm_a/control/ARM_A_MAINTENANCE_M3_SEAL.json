@@ -1,0 +1,33 @@
+{
+  "arm": "A",
+  "task": "M3 tail_lines",
+  "start_unix": 1788362325.0408263,
+  "end_unix": 1788362420.0595107,
+  "maintenance_wall_seconds": 95.019,
+  "starting_initial_seal_tree_sha256": "1f43febf225a890ea45ee1a11c00ee3beef7a5ff320f911083d0d2ad4924b285",
+  "ending_maintenance_tree_sha256": "48fc9651b0572182167ac8149c077e959a01644a4d515903e25c01ca25acb805",
+  "files_changed": [
+    "api_wire_context.py",
+    "context_engine.py",
+    "context_routes.py",
+    "lab_tools_project.py",
+    "pcmmad_lab_action_schema_ACTIVE.json",
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json",
+    "tests/test_bounded_project_read.py"
+  ],
+  "files_added": [],
+  "files_missing": [],
+  "python_loc_added": 18,
+  "python_loc_deleted": 1,
+  "test_loc_added": 24,
+  "test_loc_deleted": 0,
+  "schema_config_lines_added": 10,
+  "schema_config_lines_deleted": 0,
+  "arm_regression_tests": "8/8 PASS",
+  "visible_evaluator": "6/6 PASS",
+  "compileall": "PASS",
+  "maintenance_hidden_evaluator_run": false,
+  "diff_sha256": "50e3909619bf7cf45d78947273d836585be4b9fb28a54b3cc09ebc008fd484d1",
+  "diff_bytes": 6857,
+  "semantics": "tail_lines is exclusive with start_line/end_line; tail selection precedes UTF-8 byte clipping; project-root authority unchanged"
+}

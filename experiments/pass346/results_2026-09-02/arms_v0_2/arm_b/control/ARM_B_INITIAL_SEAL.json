@@ -1,0 +1,39 @@
+{
+  "arm": "B",
+  "method": "Practical Coding / HSP v0",
+  "start_unix": 1788362086.2489784,
+  "end_unix": 1788362163.0014446,
+  "implementation_wall_seconds": 76.752,
+  "preimplementation_contract_sha256": "0ae30bdb4695f6514ad1590715d23f60eb12aa56f5ac042d5b03e13803ad4501",
+  "starting_frozen_tree_sha256": "b27fd1a4e42bce1ad08af933026845083b0c577ca7e73b95301b76e9ae1b20af",
+  "ending_adjudication_tree_sha256": "89a5b76a09dba0165fbbb2555f55468bf4ac0b4d6836ca42efb665ddb06de60c",
+  "files_changed": [
+    "context_engine.py",
+    "lab_tools_project.py"
+  ],
+  "files_added": [
+    "tests/test_hsp_bounded_read_contract.py"
+  ],
+  "files_missing": [],
+  "source_loc_added": 40,
+  "source_loc_deleted": 16,
+  "test_loc_added": 90,
+  "test_loc_deleted": 0,
+  "new_permanent_helpers": [
+    "_path_is_within",
+    "_bounded_utf8_text"
+  ],
+  "visible_evaluator": "6/6 PASS",
+  "arm_contract_tests": "9/9 PASS",
+  "compileall": "PASS",
+  "hidden_evaluator_revealed": false,
+  "cross_arm_artifacts_read": false,
+  "additional_parent_seam_repair": "ReadManyFileEntry derives returned UTF-8 byte count and truncation from actual result/source metadata",
+  "residual_nonclaims": [
+    "no atomic snapshot under concurrent mutation",
+    "replacement decode can alter encoded-size relation to source bytes",
+    "not production-readiness evidence"
+  ],
+  "diff_sha256": "a2263805557715aabc146b08596e39957132de9d2f4dc6f2b726ebb2e6935a6c",
+  "diff_bytes": 9539
+}

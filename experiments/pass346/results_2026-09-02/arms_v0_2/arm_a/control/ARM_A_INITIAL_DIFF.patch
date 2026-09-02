@@ -1,0 +1,147 @@
+--- a/context_engine.py
++++ b/context_engine.py
+@@ -325,8 +325,10 @@
+         if not Path(user_path).is_absolute()
+         else Path(user_path).resolve()
+     )
+-    if not any(ar == candidate or ar in candidate.parents for ar in allowed_roots):
+-        raise BadPathError("resolved path escapes allowed roots")
++    authority_roots = [root] if base_root else allowed_roots
++    if not any(ar == candidate or ar in candidate.parents for ar in authority_roots):
++        scope = "base_root" if base_root else "allowed roots"
++        raise BadPathError(f"resolved path escapes {scope}")
+     return candidate
+ 
+ 
+@@ -450,6 +452,13 @@
+     )
+ 
+ 
++def _truncate_utf8_bytes(text: str, max_bytes: int) -> str:
++    encoded = text.encode("utf-8")
++    if len(encoded) <= max_bytes:
++        return text
++    return encoded[:max_bytes].decode("utf-8", errors="ignore")
++
++
+ def read_file(request: FileReadRequest) -> FileReadResponse:
+     target = resolve_user_path(request.path, base_root=request.base_root)
+     if not target.exists() or not target.is_file():
+@@ -460,19 +469,21 @@
+     max_bytes = (
+         MAX_READ_BYTES
+         if request.max_bytes in (None, 0, -1)
+-        else min(request.max_bytes, MAX_READ_BYTES)
++        else max(0, min(request.max_bytes, MAX_READ_BYTES))
+     )
+     lines = raw.splitlines()
+     total = len(lines)
+     if request.start_line is None and request.end_line is None:
+-        content = raw[:max_bytes]
++        content = _truncate_utf8_bytes(raw, max_bytes)
+         rs = 1
+         re = min(total, content.count("\n") + 1 if content else 0)
+     else:
+-        start_line = max(1, request.start_line or 1)
+-        e = min(total, request.end_line or min(total, s + MAX_READ_LINES - 1))
++        s = max(1, request.start_line or 1)
++        requested_end = request.end_line if request.end_line is not None else s + MAX_READ_LINES - 1
++        e = min(total, requested_end)
+         e = max(e, s)
+-        content = "\n".join(lines[s - 1 : e])[:max_bytes]
++        selected = "\n".join(lines[s - 1 : e])
++        content = _truncate_utf8_bytes(selected, max_bytes)
+         rs, re = s, e
+     return FileReadResponse(
+         ok=True,
+--- a/lab_tools_project.py
++++ b/lab_tools_project.py
+@@ -11,7 +11,7 @@
+ 
+ JsonObject = MutableMapping[str, Any]
+ 
+-from context_engine import FileListRequest
++from context_engine import ContextPlaneError, FileListRequest, FileReadRequest
+ 
+ ToolPayload: TypeAlias = JsonObject
+ ToolResult: TypeAlias = JsonObject
+@@ -719,7 +719,7 @@
+             FileReadRequest(path=path, base_root=str(root), max_bytes=request.max_bytes_each)
+         )
+         return path, ReadManyFileEntry.from_read_result(result).to_dict(), False
+-    except (OSError, RuntimeError, ValueError, TypeError, UnicodeError) as exc:
++    except (ContextPlaneError, OSError, RuntimeError, ValueError, TypeError, UnicodeError) as exc:
+         return path, ReadManyFileEntry.from_error(exc).to_dict(), True
+ 
+ 
+--- /dev/null
++++ b/tests/test_bounded_project_read.py
+@@ -0,0 +1,68 @@
++from __future__ import annotations
++
++import shutil
++import tempfile
++import unittest
++from pathlib import Path
++from types import SimpleNamespace
++
++import context_engine as ce
++import lab_tools_project as ltp
++
++
++class BoundedProjectReadTests(unittest.TestCase):
++    def setUp(self) -> None:
++        self.workspace = Path(tempfile.mkdtemp(prefix="hsp346_arm_a_", dir=str(Path(__file__).resolve().parents[2])))
++        self.root = self.workspace / "project"
++        self.root.mkdir()
++        (self.root / "sample.txt").write_text("alpha\nbéta\ngamma\n", encoding="utf-8")
++        (self.root / "utf8.txt").write_text("ééé", encoding="utf-8")
++        (self.workspace / "outside.txt").write_text("outside", encoding="utf-8")
++        self._old_get_allowed_roots = ce.get_allowed_roots
++        ce.get_allowed_roots = lambda: [self.workspace.resolve()]
++
++    def tearDown(self) -> None:
++        ce.get_allowed_roots = self._old_get_allowed_roots
++        shutil.rmtree(self.workspace, ignore_errors=True)
++
++    def test_range_is_1_based_inclusive(self) -> None:
++        result = ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), start_line=2, end_line=2, max_bytes=100))
++        self.assertEqual("béta", result.content)
++        self.assertEqual((2, 2), (result.slice.start_line, result.slice.end_line))
++
++    def test_utf8_budget_never_splits_or_exceeds(self) -> None:
++        for budget in range(0, 7):
++            request_budget = budget if budget else 0
++            result = ce.read_file(ce.FileReadRequest(path="utf8.txt", base_root=str(self.root), max_bytes=request_budget))
++            if budget:
++                self.assertLessEqual(len(result.content.encode("utf-8")), budget)
++                result.content.encode("utf-8").decode("utf-8")
++        self.assertEqual("é", ce.read_file(ce.FileReadRequest(path="utf8.txt", base_root=str(self.root), max_bytes=3)).content)
++
++    def test_base_root_confines_relative_and_absolute_paths(self) -> None:
++        for path in ("../outside.txt", str((self.workspace / "outside.txt").resolve())):
++            with self.assertRaises(ce.BadPathError):
++                ce.read_file(ce.FileReadRequest(path=path, base_root=str(self.root), max_bytes=100))
++
++    def test_parent_project_files_read_surface(self) -> None:
++        dep = SimpleNamespace(
++            normalize_project_path=lambda payload: str(payload.get("path", "")),
++            project_root_path=lambda project_id: str(self.root),
++            context_wrap=lambda thunk: thunk(),
++            read_file=ce.read_file,
++        )
++        result = ltp._project_files_read_payload({"project_id":"A", "path":"sample.txt", "start_line":2, "end_line":2, "max_bytes":100}, dep)
++        data = result.to_dict() if hasattr(result, "to_dict") else result
++        self.assertEqual("béta", data["content"])
++
++    def test_read_many_preserves_missing_child_failure(self) -> None:
++        dep = SimpleNamespace(error_cls=RuntimeError, get_project_root=lambda project_id:self.root, read_file=ce.read_file)
++        result = ltp._project_read_many_payload({"project_id":"A", "paths":["sample.txt","missing.txt"], "max_bytes_each":5}, dep)
++        self.assertEqual(1, result["read_count"])
++        self.assertEqual(1, result["error_count"])
++        self.assertNotIn("error", result["files"]["sample.txt"])
++        self.assertIn("error", result["files"]["missing.txt"])
++
++
++if __name__ == "__main__":
++    unittest.main()

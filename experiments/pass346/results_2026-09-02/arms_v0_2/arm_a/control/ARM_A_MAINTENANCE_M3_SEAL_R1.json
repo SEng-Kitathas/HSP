@@ -1,0 +1,49 @@
+{
+  "arm": "A",
+  "task": "M3 tail_lines",
+  "status": "replacement final maintenance seal",
+  "supersedes_invalid_seal_sha256": "37ffe17cefd1f089e335b08d454ea6ba5f3a0375d1591e5967e287534361e92c",
+  "supersession_reason": "prior green M3 seal normalized 4,568 CRLFs in ACTIVE action schema; semantics green but byte-clean artifact preservation failed",
+  "starting_initial_seal_tree_sha256": "1f43febf225a890ea45ee1a11c00ee3beef7a5ff320f911083d0d2ad4924b285",
+  "ending_maintenance_tree_sha256": "b702382494803c2157dd87a4dacf45926099cf58bd5e2ca6031bb868d8fad4da",
+  "primary_maintenance_wall_seconds_before_artifact_repair": 95.019,
+  "artifact_preservation_repair_iterations": 1,
+  "files_changed": [
+    "api_wire_context.py",
+    "context_engine.py",
+    "context_routes.py",
+    "lab_tools_project.py",
+    "pcmmad_lab_action_schema_ACTIVE.json",
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json",
+    "tests/test_bounded_project_read.py"
+  ],
+  "files_added": [],
+  "files_missing": [],
+  "python_loc_added": 18,
+  "python_loc_deleted": 1,
+  "test_loc_added": 24,
+  "test_loc_deleted": 0,
+  "schema_config_lines_added": 10,
+  "schema_config_lines_deleted": 0,
+  "schema_byte_preservation": {
+    "ACTIVE_initial_sha256": "f8bc648f3c1188a5e052d33a0ecad204d809f14cfbfa6dfb889f89bcb32a3434",
+    "ACTIVE_final_sha256": "df189d32a877bcd4bcda714857b48cd1fe0d117b4aa16319a8e8a82e5290a12d",
+    "initial_CRLF": 4568,
+    "final_CRLF": 4573,
+    "insertion_only_reconstruction_verified": true
+  },
+  "arm_tests": "8/8 PASS",
+  "visible_evaluator": "6/6 PASS",
+  "maintenance_M3_evaluator": "9/9 PASS",
+  "original_hidden_hostile_replay": "5/5 PASS",
+  "compileall": "PASS",
+  "diff_sha256": "50e3909619bf7cf45d78947273d836585be4b9fb28a54b3cc09ebc008fd484d1",
+  "diff_bytes": 6857,
+  "hidden_evaluator_revealed_before_initial_seal": false,
+  "residual_nonclaims": [
+    "isolated experiment candidate only",
+    "live receiver not mutated",
+    "no atomic filesystem snapshot claim",
+    "no general HSP proof"
+  ]
+}
