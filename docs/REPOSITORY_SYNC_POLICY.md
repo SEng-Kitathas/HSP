@@ -10,3 +10,7 @@ Status: active working policy
 6. Preserve stale/failed experiment artifacts when they are evidence; supersede rather than rewrite.
 7. After push, read back the remote branch SHA and compare it to local `HEAD`.
 8. A successful local commit is not a successful GitHub sync until remote readback matches.
+9. Treat local execution completion, local artifact persistence, assistant readback, artifact registration, chat rendering, and remote synchronization as distinct states.
+10. Assistant-side readback/render failure does not authorize rerunning stateful work; inspect local jobs/files/hashes first.
+11. When a cross-plane failure occurs, record which plane failed and preserve exact local paths, job IDs, hashes, and readback evidence.
+12. `docs/OPERATIONAL_SCARS_AND_PROJECT_RULES.md` is the active operational scar/rule ledger; new continuity-relevant failures belong there rather than being smoothed away.

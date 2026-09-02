@@ -32,3 +32,5 @@ See `experiments/pass346/`.
 ## Repository policy
 
 GitHub tracks current working authority, experiments, scars, and reproducible public-facing control artifacts. Sealed historical ZIP packages remain separate unless deliberately published. Private in-house SOP material is not automatically republished into this repository. See `docs/REPOSITORY_SYNC_POLICY.md`.
+
+The active operational scar/rule ledger is `docs/OPERATIONAL_SCARS_AND_PROJECT_RULES.md`. In particular, local execution, local persistence, assistant readback, chat rendering, artifact registration, and remote synchronization are distinct states and must not be collapsed into a single success/failure claim.
