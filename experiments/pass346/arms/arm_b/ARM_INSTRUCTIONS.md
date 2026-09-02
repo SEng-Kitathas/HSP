@@ -1,0 +1,3 @@
+# Arm B — Practical Coding / HSP v0
+
+Use the same visible requirements and frozen target as Arm A plus the supplied HSP v0 referent registry and holon contract. Before changing target code, embody a bounded-read holon contract covering identity/referent/purpose/risk/lineage, capabilities and forbidden claims, authority/currentness, state, effects and four-stage outcome, invariants, composition closure, evidence/counterevidence/ceiling, failure/recovery/no inherited fallback authority, reuse requalification, host-language lowering/residual gaps/tests, and nonclaims. Then lower only obligations that buy demonstrated clarity/protection/change quality into strong idiomatic Python.
