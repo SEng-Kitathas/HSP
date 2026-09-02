@@ -27,3 +27,29 @@ None of those states may be inferred from another merely because they normally o
 
 ## Prior carried scars
 The experiment lineage also preserves earlier scars including stale-currentness supersession, foreground timeout != scientific failure, tool smoke != execution qualification, harness failure != mechanism failure, mirror != canonical bytes until exact comparison, green test != external truth, same identity != independent evidence, representation convenience != ontology, and invalid experiments are retained/excluded rather than overwritten.
+
+
+## 2026-09-02 — Transcript-independent continuity hardening
+
+### Donor signal admitted
+Donor material proposed external/local session state plus continuity reinjection through structured tool returns when conversational context becomes unreliable. That mechanism is useful independently of the donor's explanation for *why* context may disappear.
+
+Claims about the exact implementation of OpenAI front-end safety filtering, whether specific blocked text is removed from active model context, or whether tool/system payloads receive categorically different filtering are **not verified by this project and SHALL NOT be promoted into doctrine without evidence**.
+
+### Lesson
+**Project continuity SHALL NOT depend on the chat transcript remaining complete, readable, or authoritative.** The operator-owned dev-machine project state is the recovery anchor; chat is one control/presentation surface over that state.
+
+### Project rules earned by the donor + scar synthesis
+10. Project-scoped tool responses SHOULD carry a compact structured continuity envelope derived from local persisted state when the response surface can support it.
+11. The envelope SHOULD include project/session identity when available, a state fingerprint, bounded resume summary/open loops, exact anchor paths/hashes, and an explicit rehydration route. It SHALL NOT dump the full transcript on every call.
+12. Continuity metadata SHALL be added only after the normal authentication boundary. Error handling SHALL NOT turn a failed route into an accidental project-state disclosure.
+13. Continuity reinjection SHALL be ordinary structured metadata, not fake `[SYSTEM]` text, role impersonation, stealth prompt injection, or a claimed safety-filter bypass.
+14. A read-side continuity envelope SHALL be derived without mutating project/protocol state. Reads must not create synthetic history merely because continuity was requested.
+15. Unstructured authenticated project/tool failures SHOULD still preserve a deterministic recovery pointer; a 500 must not erase the route back to Current State / Live Shadow merely because the primary operation failed.
+16. If the runtime protocol is uninitialized, its default mode SHALL NOT silently outrank stronger persisted state. Default/uninitialized protocol values and file-derived mode hints must be labeled separately.
+17. The server may prove local state, hashes, job status, and emitted response data. It SHALL NOT claim assistant readback success or chat-render success because those planes are not observable from the local server.
+18. Session IDs, when present, SHOULD be carried as recovery/disambiguation metadata, but continuity correctness SHALL NOT depend on a session identifier always being supplied.
+19. MCP MAY be an additional context transport, but the continuity architecture SHALL NOT require MCP when the receiver already exposes local project rehydration/state surfaces.
+
+### Current embodiment candidate
+An isolated candidate exists under project `pcmmad-receiver-continuity-envelope-v0-1`. It qualifies a shared `pcmmad.continuity-envelope.v1` for both compact authenticated Flask project routes and the larger native lab router. The live receiver has **not** been mutated by that candidate.
