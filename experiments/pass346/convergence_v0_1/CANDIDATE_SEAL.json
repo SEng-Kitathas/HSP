@@ -1,0 +1,35 @@
+{
+  "candidate": "HSP bounded-read metadata convergence v0.1",
+  "status": "QUALIFIED_ISOLATED_NOT_PROMOTED",
+  "process_authority_zip_sha256": "6e8d48d311a089dd2076869b50168d8c68bfb8770819a7c1dd8cf5acafdcb86f",
+  "baseline_legacy_tree_sha256": "2fa75e3f085f415e32ad131ae606d302192436d5ee4fd47896acfd060071a830",
+  "candidate_legacy_tree_sha256": "5d2cef89b32c4f76ca139e779cbb12829620939f36c24625028cc1aecc2e6196",
+  "candidate_portable_relpath_tree_sha256": "7855cb50a9c540a4d203b69a7e42acec3472684aa0336755ca691780d217e442",
+  "candidate_canonical_manifest_json_sha256": "4d0bd3c25a3bd823aaf840c06fc58ea1c2f0027b30089751ff82bec830ed6f83",
+  "candidate_file_manifest_artifact_sha256": "9f10df5ef291a91483e7f750fdade5626e9c4a94799f2abadaf8bd1cd4d68d27",
+  "referent_contract_sha256": "6031bee9168c0aa5801d1386764f87d5e4e874450039c515d4d485a46ddcf406",
+  "scope_amendment_sha256": "e946e11a779b7b4585dfdbcc3043d510a61c33b3b0ca1e96169b517fdbe374be",
+  "mutation_scope_report_sha256": "8316de081d8c69db476ba831f0172870032e0848764d50c686b284c71b9d621e",
+  "qualification_report_sha256": "fceb311b92e6aa540de79917821f587115308dbe7d6fdce98fa6f52e078103bf",
+  "patch_sha256": "c6596321dc25d026e90a2a7108de78ec3756da14ad41e5f3169faf02c6d16144",
+  "changed_paths": [
+    "api_wire_context.py",
+    "context_engine.py",
+    "lab_tools_project.py",
+    "pcmmad_lab_action_schema_ACTIVE.json",
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json",
+    "power_routes.py",
+    "tests/test_hsp_bounded_read_contract.py"
+  ],
+  "verification": {
+    "convergence_tests": "19/19 PASS",
+    "visible_evaluator": "6/6 PASS",
+    "maintenance_M3_regression": "9/9 PASS",
+    "prior_hidden_hostile_regression": "5/5 PASS",
+    "compileall": "PASS"
+  },
+  "mutation_scope_exact": true,
+  "schemas_semantically_bounded": true,
+  "runtime_byproducts_present": false,
+  "live_receiver_mutated": false
+}

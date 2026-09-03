@@ -1,19 +1,21 @@
 # Current Status
 
-- Mode: BUILD-COMMIT experiment complete; live promotion not entered.
+- Mode: BUILD-COMMIT; post-Pass-346 convergence qualified; live PROMOTION not entered.
+- Active process authority: **Rahl Engineering Canonical SOP R4.2**, adopted ZIP SHA-256 `6e8d48d311a089dd2076869b50168d8c68bfb8770819a7c1dd8cf5acafdcb86f`.
 - Mainline: Pass 345 remains last clean mainline; HSP v0 remains research-only.
-- Pass 346 v0.2 bounded-read dogfood is complete with final verdict **NO WINNER**.
-- Both initial arms were independently sealed before hidden-evaluator reveal and passed visible 6/6 + initial hidden hostile 5/5.
-- Hidden maintenance M3 (`tail_lines`) was independently implemented across core, HTTP wire/route, lab-native project read, and imported action schema.
-- First M3 seals were superseded after CSC byte review found 4,568 CRLFs in the ACTIVE schema had been normalized despite semantic tests being green.
-- Byte-clean replacement A tree: `b702382494803c2157dd87a4dacf45926099cf58bd5e2ca6031bb868d8fad4da`; replacement seal `015c2340ddc2948edaa1cbd5b4f21018a248e8a654d2cb979dccb3d0c5a5c4ad`.
-- Byte-clean replacement B tree: `2fa75e3f085f415e32ad131ae606d302192436d5ee4fd47896acfd060071a830`; replacement seal `d9927501597ac88ac1bfd5a527b247c1d45b79c1428524ba5ae8d1c4e0f17657`.
-- Final qualification: A arm tests 8/8, B 13/13; both visible 6/6, M3 9/9, original hidden hostile replay 5/5, compile PASS.
-- CSC rejected A clean promotion because bounded `read_many` success reports false default metadata (`size_bytes:0,truncated:false`).
-- CSC rejected B clean promotion because its metadata repair compares decoded returned bytes to raw source bytes; unbounded CRLF normalization yields false `truncated:true`, and the metadata referent was not normatively established.
-- HSP signal is mixed: B's parent/evidence contract found a seam A missed, but B's lowering made an under-earned semantic choice at that seam. HSP superiority is not earned.
-- Final adjudication: `experiments/pass346/results_2026-09-02/PASS346_FINAL_ADJUDICATION_2026-09-02.md`, SHA-256 `4ab3cce22a37c46fe72d61b3cb70d33244b1b1b4744f9c564ae509d34abb08e6`.
-- Compact evidence mirror: `experiments/pass346/results_2026-09-02/RESULTS_INDEX.json`, SHA-256 `8a9dc91a287117b6edbb186f7baad2ce11cf48b53631f86536822703b3894060`.
-- Full isolated arm trees remain in the local Pass 346 project and are intentionally not duplicated into Git.
-- Live receiver source was not mutated by Pass 346.
-- Next engineering seam: define authoritative source/selected/returned-byte and truncation evidence at core, then build a separate convergence candidate before any PROMOTION decision.
+- Pass 346 v0.2 bounded-read dogfood remains complete with final verdict **NO WINNER**.
+- Pass 346 final evidence remains under `experiments/pass346/results_2026-09-02/`; final adjudication SHA `4ab3cce22a37c46fe72d61b3cb70d33244b1b1b4744f9c564ae509d34abb08e6`.
+- Post-experiment convergence v0.1 started from exact final-B compatibility/evaluator tree `2fa75e3f085f415e32ad131ae606d302192436d5ee4fd47896acfd060071a830`.
+- Convergence closes the CSC metadata seam by separating raw source bytes, selected decoded UTF-8 bytes, returned UTF-8 bytes, and byte-budget truncation at the core read boundary.
+- Both active read-many parents (`lab_tools_project` and `power_routes`) project one shared validated child-evidence contract and fail closed on missing/inconsistent evidence.
+- Candidate verification: 19/19 convergence tests PASS; visible 6/6; M3 regression 9/9; prior hidden hostile 5/5; compileall PASS.
+- R4.2 mutation-scope readback: exactly seven authorized payload paths changed; no payload additions/missing; imported schema semantic diffs bounded to authorized evidence fields/descriptions; ACTIVE BOM/CRLF preserved; runtime byproducts absent at seal.
+- Candidate legacy/evaluator tree SHA-256: `5d2cef89b32c4f76ca139e779cbb12829620939f36c24625028cc1aecc2e6196`.
+- Candidate portable POSIX-relative-path tree SHA-256: `7855cb50a9c540a4d203b69a7e42acec3472684aa0336755ca691780d217e442`.
+- Candidate canonical compact manifest JSON SHA-256: `4d0bd3c25a3bd823aaf840c06fc58ea1c2f0027b30089751ff82bec830ed6f83`.
+- Candidate seal SHA-256: `b41daa6ef6c127f849a0f952fcce39b2533a35a203257a2d6510f975542565dd`.
+- Aggregate-digest scar: the same per-file byte map yielded different aggregate hashes under Windows Path ordering vs POSIX relative-path ordering; digest claims must therefore name their traversal/serialization referent.
+- Compact convergence evidence is mirrored under `experiments/pass346/convergence_v0_1/`; full isolated candidate tree remains local.
+- The qualified transcript-independent continuity-envelope candidate remains a separate unpromoted branch and is not bundled with bounded-read convergence.
+- Live receiver source remains unmodified by Pass 346/convergence.
+- Next gate: explicit PROMOTION review/currentness/rebase/rollback/live-smoke plan before any live receiver mutation.

@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "process_authority": {
+    "package_id": "RAHL_ENGINEERING_CANONICAL_SOP_R4_2_2026-09-03",
+    "zip_sha256": "6e8d48d311a089dd2076869b50168d8c68bfb8770819a7c1dd8cf5acafdcb86f"
+  },
+  "referent_contract_sha256": "6031bee9168c0aa5801d1386764f87d5e4e874450039c515d4d485a46ddcf406",
+  "scope_amendment_sha256": "e946e11a779b7b4585dfdbcc3043d510a61c33b3b0ca1e96169b517fdbe374be",
+  "baseline_identities": {
+    "files": 61,
+    "legacy_windows_path_order_sha256": "2fa75e3f085f415e32ad131ae606d302192436d5ee4fd47896acfd060071a830",
+    "canonical_posix_relpath_order_sha256": "07661fddba33c5a37ea4225b157d24886a3996a06bdf2ab651ed012bc4b3c8cd",
+    "canonical_manifest_json_sha256": "a33b74f0a6ce892adb010003e7ecb7e2ddbf087c2f1761e0a8422de6af2ca223"
+  },
+  "candidate_identities": {
+    "files": 61,
+    "legacy_windows_path_order_sha256": "5d2cef89b32c4f76ca139e779cbb12829620939f36c24625028cc1aecc2e6196",
+    "canonical_posix_relpath_order_sha256": "7855cb50a9c540a4d203b69a7e42acec3472684aa0336755ca691780d217e442",
+    "canonical_manifest_json_sha256": "4d0bd3c25a3bd823aaf840c06fc58ea1c2f0027b30089751ff82bec830ed6f83"
+  },
+  "tree_identity_referent_note_sha256": "9aed49f99474fce8b1bb193b8199d8a8b5bf1bf6f43660c3c4fb13c1d532b5f7",
+  "candidate_file_manifest_sha256": "9f10df5ef291a91483e7f750fdade5626e9c4a94799f2abadaf8bd1cd4d68d27",
+  "authorized_changed_paths": [
+    "api_wire_context.py",
+    "context_engine.py",
+    "lab_tools_project.py",
+    "pcmmad_lab_action_schema_ACTIVE.json",
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json",
+    "power_routes.py",
+    "tests/test_hsp_bounded_read_contract.py"
+  ],
+  "actual_changed_paths": [
+    "api_wire_context.py",
+    "context_engine.py",
+    "lab_tools_project.py",
+    "pcmmad_lab_action_schema_ACTIVE.json",
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json",
+    "power_routes.py",
+    "tests/test_hsp_bounded_read_contract.py"
+  ],
+  "added_paths": [],
+  "missing_paths": [],
+  "mutation_scope_exact": true,
+  "schema_reports": {
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json": {
+      "semantic_diff_paths": [
+        "/components/schemas/FileReadResponse/properties/slice/properties/returned_bytes",
+        "/components/schemas/FileReadResponse/properties/slice/properties/selected_bytes",
+        "/components/schemas/FileReadResponse/properties/slice/properties/truncated",
+        "/components/schemas/FileReadResponse/properties/slice/required",
+        "/components/schemas/ReadManyFileResult/properties/size_bytes/description",
+        "/components/schemas/ReadManyFileResult/properties/truncated/description"
+      ],
+      "semantic_diff_only_authorized": true,
+      "unauthorized_semantic_paths": [],
+      "baseline_bom": false,
+      "candidate_bom": false,
+      "baseline_crlf": 0,
+      "candidate_crlf": 0,
+      "baseline_lf_total": 4571,
+      "candidate_lf_total": 4590
+    },
+    "pcmmad_lab_action_schema_ACTIVE.json": {
+      "semantic_diff_paths": [
+        "/components/schemas/FileReadResponse/properties/slice/properties/returned_bytes",
+        "/components/schemas/FileReadResponse/properties/slice/properties/selected_bytes",
+        "/components/schemas/FileReadResponse/properties/slice/properties/truncated",
+        "/components/schemas/FileReadResponse/properties/slice/required",
+        "/components/schemas/ReadManyFileResult/properties/size_bytes/description",
+        "/components/schemas/ReadManyFileResult/properties/truncated/description"
+      ],
+      "semantic_diff_only_authorized": true,
+      "unauthorized_semantic_paths": [],
+      "baseline_bom": true,
+      "candidate_bom": true,
+      "baseline_crlf": 4573,
+      "candidate_crlf": 4592,
+      "baseline_lf_total": 4573,
+      "candidate_lf_total": 4592
+    }
+  },
+  "runtime_byproducts_present": false,
+  "verification": {
+    "convergence_tests": "19/19 PASS",
+    "visible_evaluator": "6/6 PASS",
+    "maintenance_M3_regression": "9/9 PASS",
+    "prior_hidden_hostile_regression": "5/5 PASS",
+    "compileall": "PASS"
+  },
+  "aggregate_hash_referent_finding": {
+    "status": "RESOLVED",
+    "finding": "Two aggregate digests were observed over identical per-file bytes because one algorithm sorts Windows Path objects and the other sorts POSIX relative-path strings. No candidate payload byte oscillation occurred.",
+    "legacy_evaluator_hash": "5d2cef89b32c4f76ca139e779cbb12829620939f36c24625028cc1aecc2e6196",
+    "canonical_relpath_hash": "7855cb50a9c540a4d203b69a7e42acec3472684aa0336755ca691780d217e442",
+    "canonical_manifest_json_hash": "4d0bd3c25a3bd823aaf840c06fc58ea1c2f0027b30089751ff82bec830ed6f83",
+    "per_file_stability_check": "zero files differed from POST_CLEAN_STABILITY_BASELINE.json"
+  },
+  "superseded_reports": [
+    "convergence_v0_1/MUTATION_SCOPE_REPORT_SUPERSEDED_01.json",
+    "convergence_v0_1/MUTATION_SCOPE_REPORT_SUPERSEDED_02.json"
+  ],
+  "patch_sha256": "c6596321dc25d026e90a2a7108de78ec3756da14ad41e5f3169faf02c6d16144"
+}

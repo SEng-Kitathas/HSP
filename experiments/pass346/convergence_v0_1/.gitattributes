@@ -1,0 +1,3 @@
+# Exact-byte convergence evidence enclave: preserve source artifact hashes/EOLs verbatim.
+** binary
+.gitattributes text eol=lf

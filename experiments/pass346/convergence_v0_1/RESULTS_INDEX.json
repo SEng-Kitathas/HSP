@@ -1,0 +1,68 @@
+{
+  "schema": "hsp.pass346.convergence-evidence-index.v1",
+  "source_workspace": "E:\\new pc\\AI_Pushes_Sandbox\\projects\\hsp-pass346-prereg-pcmmad-bounded-read\\convergence_v0_1",
+  "full_candidate_tree_mirrored": false,
+  "candidate_seal_sha256": "b41daa6ef6c127f849a0f952fcce39b2533a35a203257a2d6510f975542565dd",
+  "artifacts": [
+    {
+      "path": "EVIDENCE_REFERENT_CONTRACT.md",
+      "bytes": 3533,
+      "sha256": "6031bee9168c0aa5801d1386764f87d5e4e874450039c515d4d485a46ddcf406"
+    },
+    {
+      "path": "PRE_MUTATION_FREEZE.json",
+      "bytes": 10600,
+      "sha256": "56fe950c8ec8933d55f5b85b05b7a12e516649a1a8cc094ed428e91e30531bf9"
+    },
+    {
+      "path": "SCOPE_AMENDMENT_01.md",
+      "bytes": 1751,
+      "sha256": "e946e11a779b7b4585dfdbcc3043d510a61c33b3b0ca1e96169b517fdbe374be"
+    },
+    {
+      "path": "POST_CLEAN_STABILITY_BASELINE.json",
+      "bytes": 8782,
+      "sha256": "655a553bfee9aa759fec3248a6a69402075524a7a0e5bd0b92c1c3ef893921f4"
+    },
+    {
+      "path": "TREE_IDENTITY_REFERENT_NOTE.json",
+      "bytes": 1321,
+      "sha256": "9aed49f99474fce8b1bb193b8199d8a8b5bf1bf6f43660c3c4fb13c1d532b5f7"
+    },
+    {
+      "path": "CANDIDATE_FILE_MANIFEST.json",
+      "bytes": 9347,
+      "sha256": "9f10df5ef291a91483e7f750fdade5626e9c4a94799f2abadaf8bd1cd4d68d27"
+    },
+    {
+      "path": "CONVERGENCE_V0_1.patch",
+      "bytes": 21198,
+      "sha256": "c6596321dc25d026e90a2a7108de78ec3756da14ad41e5f3169faf02c6d16144"
+    },
+    {
+      "path": "MUTATION_SCOPE_REPORT_SUPERSEDED_01.json",
+      "bytes": 4365,
+      "sha256": "9eb6919a107c78f7fd74f829c99db0b94f203c265cd4af11afa1d8365fe4aac5"
+    },
+    {
+      "path": "MUTATION_SCOPE_REPORT_SUPERSEDED_02.json",
+      "bytes": 3811,
+      "sha256": "8bbf9f1609f538599ecd97113217070d07555fb083937c78a55761f003ffa0c8"
+    },
+    {
+      "path": "MUTATION_SCOPE_REPORT_FINAL.json",
+      "bytes": 5060,
+      "sha256": "8316de081d8c69db476ba831f0172870032e0848764d50c686b284c71b9d621e"
+    },
+    {
+      "path": "QUALIFICATION_REPORT.md",
+      "bytes": 3427,
+      "sha256": "fceb311b92e6aa540de79917821f587115308dbe7d6fdce98fa6f52e078103bf"
+    },
+    {
+      "path": "CANDIDATE_SEAL.json",
+      "bytes": 1907,
+      "sha256": "b41daa6ef6c127f849a0f952fcce39b2533a35a203257a2d6510f975542565dd"
+    }
+  ]
+}

@@ -53,3 +53,21 @@ Claims about the exact implementation of OpenAI front-end safety filtering, whet
 
 ### Current embodiment candidate
 An isolated candidate exists under project `pcmmad-receiver-continuity-envelope-v0-1`. It qualifies a shared `pcmmad.continuity-envelope.v1` for both compact authenticated Flask project routes and the larger native lab router. The live receiver has **not** been mutated by that candidate.
+
+
+## 2026-09-03 — Aggregate digest referent scar
+
+### Observed scar
+During R4.2-governed bounded-read convergence, the exact same 61-file payload map produced two aggregate tree SHA-256 values because two helpers traversed the rows differently: the legacy Pass 346 evaluator sorted Windows `Path` objects, while the portable mutation-scope helper sorted POSIX relative-path strings. Per-file hashes were identical; no payload oscillation occurred.
+
+### Lesson
+**An aggregate digest is not fully specified by the hash algorithm alone. Its traversal/order/serialization referent is part of the evidence contract.**
+
+### Rules earned
+20. Aggregate tree/manifest digests SHALL name the row framing, path normalization, ordering rule, and serialization convention they bind when the digest is consequence-bearing.
+21. A digest mismatch SHALL trigger per-file/row comparison before concluding payload mutation.
+22. Portable/canonical manifests SHOULD use deterministic logical relative paths and explicitly sorted serialization rather than host-dependent `Path` ordering.
+23. Legacy digests MAY be retained for evaluator/backward compatibility, but they SHALL be labeled as legacy/host-order identities rather than silently treated as portable canon.
+
+`TREE_DIGEST_VALUE != TREE_DIGEST_REFERENT`
+`HASH_MISMATCH != PAYLOAD_MUTATION_WITHOUT_ROW_DIFF`

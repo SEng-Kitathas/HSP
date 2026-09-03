@@ -1,0 +1,378 @@
+--- baseline/api_wire_context.py
++++ candidate/api_wire_context.py
+@@ -46,8 +46,11 @@
+ class FileSlice:
+     start_line: int
+     end_line: int
+     max_bytes: int
++    selected_bytes: int
++    returned_bytes: int
++    truncated: bool
+ 
+     def to_dict(self) -> JsonObject:
+         return asdict(self)
+ 
+--- baseline/context_engine.py
++++ candidate/context_engine.py
+@@ -466,8 +466,41 @@
+         return text
+     return encoded[:max_bytes].decode("utf-8", errors="ignore")
+ 
+ 
++def validated_read_result_evidence(result: object) -> tuple[str, int, bool]:
++    """Return child content/returned-bytes/truncation only from consistent core evidence."""
++
++    as_dict = result.to_dict() if hasattr(result, "to_dict") else result
++    if not isinstance(as_dict, dict):
++        raise ValueError("read child result must be an object")
++    content = as_dict.get("content")
++    if not isinstance(content, str):
++        raise ValueError("read child content evidence is invalid")
++    slice_data = as_dict.get("slice")
++    if not isinstance(slice_data, dict):
++        raise ValueError("read child result is missing slice evidence")
++
++    selected_bytes = slice_data.get("selected_bytes")
++    returned_bytes = slice_data.get("returned_bytes")
++    truncated = slice_data.get("truncated")
++    if isinstance(selected_bytes, bool) or not isinstance(selected_bytes, int) or selected_bytes < 0:
++        raise ValueError("read child selected_bytes evidence is invalid")
++    if isinstance(returned_bytes, bool) or not isinstance(returned_bytes, int) or returned_bytes < 0:
++        raise ValueError("read child returned_bytes evidence is invalid")
++    if not isinstance(truncated, bool):
++        raise ValueError("read child truncated evidence is invalid")
++
++    actual_returned_bytes = len(content.encode("utf-8"))
++    if returned_bytes != actual_returned_bytes:
++        raise ValueError("read child returned_bytes does not match content")
++    if selected_bytes < returned_bytes:
++        raise ValueError("read child selected_bytes is smaller than returned_bytes")
++    if truncated != (returned_bytes < selected_bytes):
++        raise ValueError("read child truncated evidence is inconsistent")
++    return content, returned_bytes, truncated
++
++
+ def read_file(request: FileReadRequest) -> FileReadResponse:
+     target = resolve_user_path(request.path, base_root=request.base_root)
+     if not target.exists() or not target.is_file():
+         raise NotFoundError("file not found")
+@@ -500,15 +533,25 @@
+         rs = max(1, request.start_line or 1)
+         requested_end = request.end_line if request.end_line is not None else rs + MAX_READ_LINES - 1
+         re = max(rs, min(total, requested_end))
+         selected = "\n".join(lines[rs - 1 : re])
++    selected_bytes = len(selected.encode("utf-8"))
+     content = _bounded_utf8_text(selected, max_bytes)
++    returned_bytes = len(content.encode("utf-8"))
++    truncated = returned_bytes < selected_bytes
+     if request.tail_lines is None and request.start_line is None and request.end_line is None:
+         re = min(total, content.count("\n") + 1 if content else 0)
+     return FileReadResponse(
+         ok=True,
+         file=_file_item(_safe_stat(target)),
+-        slice=FileSlice(start_line=rs, end_line=re, max_bytes=max_bytes),
++        slice=FileSlice(
++            start_line=rs,
++            end_line=re,
++            max_bytes=max_bytes,
++            selected_bytes=selected_bytes,
++            returned_bytes=returned_bytes,
++            truncated=truncated,
++        ),
+         content=content,
+     )
+ 
+ 
+--- baseline/lab_tools_project.py
++++ candidate/lab_tools_project.py
+@@ -10,9 +10,14 @@
+ from typing import Any, Callable, TypeAlias
+ 
+ JsonObject = MutableMapping[str, Any]
+ 
+-from context_engine import ContextPlaneError, FileListRequest, FileReadRequest
++from context_engine import (
++    ContextPlaneError,
++    FileListRequest,
++    FileReadRequest,
++    validated_read_result_evidence,
++)
+ 
+ ToolPayload: TypeAlias = JsonObject
+ ToolResult: TypeAlias = JsonObject
+ 
+@@ -275,19 +280,10 @@
+     error: str | None = None
+ 
+     @classmethod
+     def from_read_result(cls, result: object) -> "ReadManyFileEntry":
+-        as_dict = result.to_dict() if hasattr(result, "to_dict") else result
+-        data = as_dict if isinstance(as_dict, dict) else {}
+-        content = _get_str(data, "content")
+-        returned_size = len(content.encode("utf-8"))
+-        file_data = data.get("file") if isinstance(data.get("file"), dict) else {}
+-        source_size = _get_int(file_data, "size_bytes", returned_size)
+-        return cls(
+-            content=content,
+-            size_bytes=returned_size,
+-            truncated=returned_size < source_size,
+-        )
++        content, returned_bytes, truncated = validated_read_result_evidence(result)
++        return cls(content=content, size_bytes=returned_bytes, truncated=truncated)
+ 
+     @classmethod
+     def from_error(cls, exc: Exception) -> "ReadManyFileEntry":
+         return cls(error=str(exc))
+--- baseline/pcmmad_lab_action_schema_ACTIVE.json
++++ candidate/pcmmad_lab_action_schema_ACTIVE.json
+@@ -1681,14 +1681,31 @@
+                                                                                                                                      "type":  "integer"
+                                                                                                                                  },
+                                                                                                                     "max_bytes":  {
+                                                                                                                                       "type":  "integer"
+-                                                                                                                                  }
++                                                                                                                                  },
++                                                                                                                    "selected_bytes":  {
++                                                                                                                      "type":  "integer",
++                                                                                                                      "minimum":  0,
++                                                                                                                      "description":  "UTF-8 bytes of decoded/logically selected text before max_bytes clipping."
++                                                                                                                    },
++                                                                                                                    "returned_bytes":  {
++                                                                                                                      "type":  "integer",
++                                                                                                                      "minimum":  0,
++                                                                                                                      "description":  "UTF-8 bytes actually returned in content after max_bytes clipping."
++                                                                                                                    },
++                                                                                                                    "truncated":  {
++                                                                                                                      "type":  "boolean",
++                                                                                                                      "description":  "True only when max_bytes clipped the selected decoded text."
++                                                                                                                    }
+                                                                                                                 },
+                                                                                                  "required":  [
+                                                                                                                   "start_line",
+                                                                                                                   "end_line",
+-                                                                                                                  "max_bytes"
++                                                                                                                  "max_bytes",
++                                                                                                                  "selected_bytes",
++                                                                                                                  "returned_bytes",
++                                                                                                                  "truncated"
+                                                                                                               ],
+                                                                                                  "additionalProperties":  false
+                                                                                              },
+                                                                                    "content":  {
+@@ -2760,12 +2777,14 @@
+                                                                                      "content":  {
+                                                                                                      "type":  "string"
+                                                                                                  },
+                                                                                      "size_bytes":  {
+-                                                                                                        "type":  "integer"
++                                                                                                        "type":  "integer",
++                                                                                                        "description":  "UTF-8 byte length actually returned in content; projected from core slice.returned_bytes."
+                                                                                                     },
+                                                                                      "truncated":  {
+-                                                                                                       "type":  "boolean"
++                                                                                                       "type":  "boolean",
++                                                                                                       "description":  "True only when the child core read byte ceiling clipped selected decoded text; projected from core slice.truncated."
+                                                                                                    },
+                                                                                      "error":  {
+                                                                                                    "type":  "string",
+                                                                                                    "description":  "Present on per-file error. Does not fail the whole request."
+--- baseline/pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json
++++ candidate/pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json
+@@ -1681,14 +1681,31 @@
+                 "type": "integer"
+               },
+               "max_bytes": {
+                 "type": "integer"
++              },
++              "selected_bytes": {
++                "type": "integer",
++                "minimum": 0,
++                "description": "UTF-8 bytes of decoded/logically selected text before max_bytes clipping."
++              },
++              "returned_bytes": {
++                "type": "integer",
++                "minimum": 0,
++                "description": "UTF-8 bytes actually returned in content after max_bytes clipping."
++              },
++              "truncated": {
++                "type": "boolean",
++                "description": "True only when max_bytes clipped the selected decoded text."
+               }
+             },
+             "required": [
+               "start_line",
+               "end_line",
+-              "max_bytes"
++              "max_bytes",
++              "selected_bytes",
++              "returned_bytes",
++              "truncated"
+             ],
+             "additionalProperties": false
+           },
+           "content": {
+@@ -2760,12 +2777,14 @@
+           "content": {
+             "type": "string"
+           },
+           "size_bytes": {
+-            "type": "integer"
++            "type": "integer",
++            "description": "UTF-8 byte length actually returned in content; projected from core slice.returned_bytes."
+           },
+           "truncated": {
+-            "type": "boolean"
++            "type": "boolean",
++            "description": "True only when the child core read byte ceiling clipped selected decoded text; projected from core slice.truncated."
+           },
+           "error": {
+             "type": "string",
+             "description": "Present on per-file error. Does not fail the whole request."
+--- baseline/power_routes.py
++++ candidate/power_routes.py
+@@ -45,9 +45,9 @@
+ )
+ 
+ JsonObject = MutableMapping[str, Any]
+ 
+-from context_engine import FileReadRequest, read_file
++from context_engine import FileReadRequest, read_file, validated_read_result_evidence
+ from control_plane_models import TextWindow
+ from execution_routes import (
+     MAX_OUTPUT_BYTES,
+     _finalize,
+@@ -373,13 +373,13 @@
+     try:
+         result = read_file(
+             FileReadRequest(path=path, base_root=str(root), max_bytes=(max_bytes_each or 10**12))
+         )
+-        result_data = result.to_dict() if hasattr(result, "to_dict") else result
++        content, returned_bytes, truncated = validated_read_result_evidence(result)
+         return ReadManyFileResult(
+-            content=result_data.get("content", ""),
+-            size_bytes=result_data.get("size_bytes", 0),
+-            truncated=result_data.get("truncated", False),
++            content=content,
++            size_bytes=returned_bytes,
++            truncated=truncated,
+         ).to_dict()
+     except (ValueError, OSError, UnicodeError, TypeError) as exc:
+         return ReadManyFileResult(error=str(exc), truncated=False, size_bytes=0).to_dict()
+ 
+--- baseline/tests/test_hsp_bounded_read_contract.py
++++ candidate/tests/test_hsp_bounded_read_contract.py
+@@ -8,8 +8,9 @@
+ 
+ import context_engine as ce
+ import api_wire_context as awc
+ import lab_tools_project as ltp
++import power_routes as pr
+ 
+ 
+ class HspBoundedReadContractTests(unittest.TestCase):
+     def setUp(self) -> None:
+@@ -17,8 +18,10 @@
+         self.root = self.workspace / "project"
+         self.root.mkdir()
+         (self.root / "sample.txt").write_text("alpha\nbéta\ngamma\n", encoding="utf-8")
+         (self.root / "utf8.txt").write_text("ééé", encoding="utf-8")
++        (self.root / "crlf.txt").write_bytes(b"a\r\nb\r\n")
++        (self.root / "malformed.txt").write_bytes(b"\xffa")
+         (self.root / "blob.bin").write_bytes(b"abc")
+         (self.workspace / "outside.txt").write_text("outside", encoding="utf-8")
+         self.old_roots = ce.get_allowed_roots
+         ce.get_allowed_roots = lambda: [self.workspace.resolve()]
+@@ -43,8 +46,11 @@
+ 
+     def test_full_read_control_preserves_content(self) -> None:
+         r = ce.read_file(ce.FileReadRequest(path="sample.txt", base_root=str(self.root), max_bytes=1000))
+         self.assertEqual("alpha\nbéta\ngamma\n", r.content)
++        self.assertEqual(len(r.content.encode("utf-8")), r.slice.selected_bytes)
++        self.assertEqual(len(r.content.encode("utf-8")), r.slice.returned_bytes)
++        self.assertFalse(r.slice.truncated)
+ 
+     def test_exact_project_root_is_authority_boundary(self) -> None:
+         for path in ("../outside.txt", str((self.workspace / "outside.txt").resolve())):
+             with self.subTest(path=path), self.assertRaises(ce.BadPathError):
+@@ -71,8 +77,65 @@
+         self.assertEqual("alpha", good["content"])
+         self.assertEqual(5, good["size_bytes"])
+         self.assertTrue(good["truncated"])
+         self.assertIn("error", bad)
++
++    def test_crlf_raw_source_and_decoded_byte_referents_are_distinct(self) -> None:
++        r = ce.read_file(ce.FileReadRequest(path="crlf.txt", base_root=str(self.root), max_bytes=100))
++        self.assertEqual(6, r.file.size_bytes)
++        self.assertEqual("a\nb\n", r.content)
++        self.assertEqual(4, r.slice.selected_bytes)
++        self.assertEqual(4, r.slice.returned_bytes)
++        self.assertFalse(r.slice.truncated)
++
++    def test_crlf_byte_budget_truncation_is_measured_at_core(self) -> None:
++        r = ce.read_file(ce.FileReadRequest(path="crlf.txt", base_root=str(self.root), max_bytes=3))
++        self.assertEqual(6, r.file.size_bytes)
++        self.assertEqual(4, r.slice.selected_bytes)
++        self.assertEqual(3, r.slice.returned_bytes)
++        self.assertEqual("a\nb", r.content)
++        self.assertTrue(r.slice.truncated)
++
++    def test_replacement_decode_does_not_confuse_source_size_with_returned_size(self) -> None:
++        full = ce.read_file(ce.FileReadRequest(path="malformed.txt", base_root=str(self.root), max_bytes=100))
++        self.assertEqual(2, full.file.size_bytes)
++        self.assertEqual("�a", full.content)
++        self.assertEqual(4, full.slice.selected_bytes)
++        self.assertEqual(4, full.slice.returned_bytes)
++        self.assertFalse(full.slice.truncated)
++        bounded = ce.read_file(ce.FileReadRequest(path="malformed.txt", base_root=str(self.root), max_bytes=3))
++        self.assertEqual("�", bounded.content)
++        self.assertEqual(4, bounded.slice.selected_bytes)
++        self.assertEqual(3, bounded.slice.returned_bytes)
++        self.assertTrue(bounded.slice.truncated)
++
++    def test_read_many_projects_core_crlf_evidence_without_reinferring(self) -> None:
++        dep = SimpleNamespace(error_cls=RuntimeError, get_project_root=lambda project_id:self.root, read_file=ce.read_file)
++        r = ltp._project_read_many_payload({"project_id":"B", "paths":["crlf.txt"], "max_bytes_each":100}, dep)
++        good = r["files"]["crlf.txt"]
++        self.assertEqual("a\nb\n", good["content"])
++        self.assertEqual(4, good["size_bytes"])
++        self.assertFalse(good["truncated"])
++
++    def test_power_read_many_projects_the_same_core_evidence(self) -> None:
++        good = pr._read_many_file(self.root, "crlf.txt", None)
++        self.assertEqual("a\nb\n", good["content"])
++        self.assertEqual(4, good["size_bytes"])
++        self.assertFalse(good["truncated"])
++
++    def test_read_many_fails_closed_when_core_evidence_is_missing_or_inconsistent(self) -> None:
++        with self.assertRaises(ValueError):
++            ltp.ReadManyFileEntry.from_read_result({"content":"abc", "slice":{}})
++        with self.assertRaises(ValueError):
++            ltp.ReadManyFileEntry.from_read_result({
++                "content":"abc",
++                "slice":{"selected_bytes":3, "returned_bytes":2, "truncated":True},
++            })
++        with self.assertRaises(ValueError):
++            ltp.ReadManyFileEntry.from_read_result({
++                "content":"abc",
++                "slice":{"selected_bytes":3, "returned_bytes":3, "truncated":True},
++            })
+ 
+     def test_unsupported_nontext_path_is_rejected(self) -> None:
+         with self.assertRaises(ce.BadPathError):
+             ce.read_file(ce.FileReadRequest(path="blob.bin", base_root=str(self.root), max_bytes=100))
+@@ -120,8 +183,15 @@
+             prop = schema["components"]["schemas"]["ProjectFilesReadRequest"]["properties"]["tail_lines"]
+             self.assertEqual("integer", prop["type"])
+             self.assertEqual(1, prop["minimum"])
+             self.assertFalse(schema["components"]["schemas"]["ProjectFilesReadRequest"]["additionalProperties"])
++            slice_schema = schema["components"]["schemas"]["FileReadResponse"]["properties"]["slice"]
++            for field in ("selected_bytes", "returned_bytes", "truncated"):
++                self.assertIn(field, slice_schema["properties"])
++                self.assertIn(field, slice_schema["required"])
++            read_many = schema["components"]["schemas"]["ReadManyFileResult"]["properties"]
++            self.assertIn("actually returned", read_many["size_bytes"]["description"])
++            self.assertIn("byte ceiling clipped", read_many["truncated"]["description"])
+ 
+ 
+ if __name__ == "__main__":
+     unittest.main()

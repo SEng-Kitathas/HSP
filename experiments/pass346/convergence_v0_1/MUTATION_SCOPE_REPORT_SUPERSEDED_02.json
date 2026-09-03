@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "process_authority": "RAHL_ENGINEERING_CANONICAL_SOP_R4_2_2026-09-03",
+  "baseline_tree_sha256": "2fa75e3f085f415e32ad131ae606d302192436d5ee4fd47896acfd060071a830",
+  "final_tree_sha256": "7855cb50a9c540a4d203b69a7e42acec3472684aa0336755ca691780d217e442",
+  "independent_repeat_tree_sha256": "7855cb50a9c540a4d203b69a7e42acec3472684aa0336755ca691780d217e442",
+  "post_clean_stability_baseline_tree_sha256": "5d2cef89b32c4f76ca139e779cbb12829620939f36c24625028cc1aecc2e6196",
+  "tree_hash_agreement": false,
+  "authorized_changed_paths": [
+    "api_wire_context.py",
+    "context_engine.py",
+    "lab_tools_project.py",
+    "pcmmad_lab_action_schema_ACTIVE.json",
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json",
+    "power_routes.py",
+    "tests/test_hsp_bounded_read_contract.py"
+  ],
+  "actual_changed_paths": [
+    "api_wire_context.py",
+    "context_engine.py",
+    "lab_tools_project.py",
+    "pcmmad_lab_action_schema_ACTIVE.json",
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json",
+    "power_routes.py",
+    "tests/test_hsp_bounded_read_contract.py"
+  ],
+  "added_paths": [],
+  "missing_paths": [],
+  "mutation_scope_exact": true,
+  "runtime_byproducts_present": false,
+  "schema_reports": {
+    "pcmmad_lab_action_schema_v10_3_pcmmad_native_protocol_compact_30_router.json": {
+      "semantic_diff_paths": [
+        "/components/schemas/FileReadResponse/properties/slice/properties/returned_bytes",
+        "/components/schemas/FileReadResponse/properties/slice/properties/selected_bytes",
+        "/components/schemas/FileReadResponse/properties/slice/properties/truncated",
+        "/components/schemas/FileReadResponse/properties/slice/required",
+        "/components/schemas/ReadManyFileResult/properties/size_bytes/description",
+        "/components/schemas/ReadManyFileResult/properties/truncated/description"
+      ],
+      "semantic_diff_only_authorized": true,
+      "unauthorized_semantic_paths": [],
+      "baseline_bom": false,
+      "candidate_bom": false,
+      "baseline_crlf": 0,
+      "candidate_crlf": 0,
+      "baseline_lf_total": 4571,
+      "candidate_lf_total": 4590,
+      "baseline_sha256": "35913ab7712f67434860c2ad48a3aaf1a1190087d54517b7a4c034b7bf4c4c3e",
+      "candidate_sha256": "89bbd1cc39d18ec003c214178817f9652aa7a9030d660bab591b81fb3c7a24f6"
+    },
+    "pcmmad_lab_action_schema_ACTIVE.json": {
+      "semantic_diff_paths": [
+        "/components/schemas/FileReadResponse/properties/slice/properties/returned_bytes",
+        "/components/schemas/FileReadResponse/properties/slice/properties/selected_bytes",
+        "/components/schemas/FileReadResponse/properties/slice/properties/truncated",
+        "/components/schemas/FileReadResponse/properties/slice/required",
+        "/components/schemas/ReadManyFileResult/properties/size_bytes/description",
+        "/components/schemas/ReadManyFileResult/properties/truncated/description"
+      ],
+      "semantic_diff_only_authorized": true,
+      "unauthorized_semantic_paths": [],
+      "baseline_bom": true,
+      "candidate_bom": true,
+      "baseline_crlf": 4573,
+      "candidate_crlf": 4592,
+      "baseline_lf_total": 4573,
+      "candidate_lf_total": 4592,
+      "baseline_sha256": "df189d32a877bcd4bcda714857b48cd1fe0d117b4aa16319a8e8a82e5290a12d",
+      "candidate_sha256": "9fbf270d88d2b462ebe5dd53ff1c69578cabccf6d1e5153e125b891e57d56d4c"
+    }
+  },
+  "supersedes_report": "convergence_v0_1/MUTATION_SCOPE_REPORT_SUPERSEDED_01.json",
+  "supersession_reason": "An intermediate report emitted a non-repeatable tree hash despite no changed-path anomaly. The cleaned candidate was immediately rehashed twice and matched the prior evaluator-bound/stability tree exactly; the intermediate report is retained but demoted."
+}

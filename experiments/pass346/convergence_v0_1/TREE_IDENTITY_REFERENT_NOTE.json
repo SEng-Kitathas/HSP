@@ -1,0 +1,19 @@
+{
+  "baseline": {
+    "files": 61,
+    "legacy_windows_path_order_sha256": "2fa75e3f085f415e32ad131ae606d302192436d5ee4fd47896acfd060071a830",
+    "canonical_posix_relpath_order_sha256": "07661fddba33c5a37ea4225b157d24886a3996a06bdf2ab651ed012bc4b3c8cd",
+    "canonical_manifest_json_sha256": "a33b74f0a6ce892adb010003e7ecb7e2ddbf087c2f1761e0a8422de6af2ca223"
+  },
+  "candidate": {
+    "files": 61,
+    "legacy_windows_path_order_sha256": "5d2cef89b32c4f76ca139e779cbb12829620939f36c24625028cc1aecc2e6196",
+    "canonical_posix_relpath_order_sha256": "7855cb50a9c540a4d203b69a7e42acec3472684aa0336755ca691780d217e442",
+    "canonical_manifest_json_sha256": "4d0bd3c25a3bd823aaf840c06fc58ea1c2f0027b30089751ff82bec830ed6f83"
+  },
+  "definition": {
+    "legacy_windows_path_order_sha256": "SHA-256 over relpath UTF-8 + NUL + file SHA-256 hex + LF, iterating Python sorted(Path objects) on the Windows host; retained for Pass 346 evaluator compatibility.",
+    "canonical_posix_relpath_order_sha256": "Same row framing, but rows sorted by exact POSIX-style relative-path strings; platform-independent ordering referent.",
+    "canonical_manifest_json_sha256": "SHA-256 of compact UTF-8 JSON mapping relative path -> {bytes,sha256}, with JSON keys sorted; strongest portable manifest identity in this convergence seal."
+  }
+}
