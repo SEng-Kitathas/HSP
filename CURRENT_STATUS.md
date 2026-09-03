@@ -19,3 +19,4 @@
 - The qualified transcript-independent continuity-envelope candidate remains a separate unpromoted branch and is not bundled with bounded-read convergence.
 - Live receiver source remains unmodified by Pass 346/convergence.
 - Next gate: explicit PROMOTION review/currentness/rebase/rollback/live-smoke plan before any live receiver mutation.
+- Additive doctrine active over R4.2: **LINEAR HUMAN READ / SEMANTIC GATE**. Any meaningfully readable artifact SHALL receive a complete linear semantic read before promotion, sealing, publication, admission, or load-bearing use; automated checks may precede/support but SHALL NOT substitute. Binding addendum SHA `5f4ae884eb5fe0621f6b2615d5d631e76702a9a258e555a23897309c1d3808ac`.

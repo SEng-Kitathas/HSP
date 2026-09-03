@@ -71,3 +71,27 @@ During R4.2-governed bounded-read convergence, the exact same 61-file payload ma
 
 `TREE_DIGEST_VALUE != TREE_DIGEST_REFERENT`
 `HASH_MISMATCH != PAYLOAD_MUTATION_WITHOUT_ROW_DIFF`
+
+
+## 2026-09-03 — Linear human read / semantic admission gate
+
+### Binding operator doctrine
+> **LINEAR HUMAN READ / SEMANTIC GATE**
+> If an artifact can be meaningfully read, it SHALL receive a complete linear semantic read before it is promoted, sealed, published, admitted, or treated as load-bearing. Automated checks may precede and support the gate; they SHALL NOT substitute for it.
+
+### Lesson
+Integrity, structure, parsing, hashes, hostile tests, summaries, search hits, and targeted excerpts can establish important facts about an artifact without establishing that its meaning has been fully traversed. Semantic admission is therefore a separate gate.
+
+### Rules earned
+24. Any meaningfully readable artifact SHALL receive a complete linear semantic read before promotion, seal, publication, admission, or load-bearing use.
+25. Automated checks MAY precede/support the semantic gate but SHALL NOT substitute for complete linear semantic reading.
+26. Search/query coverage, structural verification, manifest/hash verification, hostile-test green, or machine-generated summaries SHALL NOT be promoted into claims of semantic ingestion/read completion.
+27. When a readable artifact is nested inside a container/archive and that member itself becomes load-bearing, container verification SHALL NOT substitute for the member's semantic read.
+28. If a readable artifact cannot be completely read because of access, scale, corruption, encryption, format, or other constraints, the limitation SHALL be explicit and the artifact SHALL remain semantically provisional.
+29. Binary/non-semantic payloads SHALL use appropriate integrity/structure/execution verification rather than artificial textual ceremony; this rule applies where meaningful semantic reading exists.
+30. Promotion/seal/publication checklists SHALL expose the semantic gate explicitly rather than hiding it inside generic “verification complete” language.
+
+`AUTOMATED_CHECK_PASS != SEMANTIC_ADMISSION`
+`SEARCH_COVERAGE != LINEAR_READ`
+`STRUCTURAL_VALIDITY != LOAD_BEARING_MEANING`
+`CONTAINER_VERIFIED != READABLE_MEMBER_SEMANTICALLY_ADMITTED`

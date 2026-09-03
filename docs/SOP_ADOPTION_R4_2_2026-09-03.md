@@ -40,3 +40,15 @@ Key non-equivalences now active:
 
 ## Authority boundary
 R4.2 is process/cold-start authority. It does not create HSP product, domain, production-readiness, scientific-result, or promotion authority. Existing HSP/project-local standing obligations continue to govern their own scopes.
+
+
+## Additive doctrine effective after R4.2 seal
+
+The following operator-authored rule is active over this workstream without rewriting the sealed R4.2 package:
+
+> **LINEAR HUMAN READ / SEMANTIC GATE**
+> If an artifact can be meaningfully read, it SHALL receive a complete linear semantic read before it is promoted, sealed, published, admitted, or treated as load-bearing. Automated checks may precede and support the gate; they SHALL NOT substitute for it.
+
+Binding addendum artifact: `docs/DOCTRINE_ADDENDUM_LINEAR_HUMAN_READ_SEMANTIC_GATE_2026-09-03.md`.
+
+This addendum is process authority only. It strengthens semantic admission discipline while preserving the exact R4.2 package bytes and lineage.
