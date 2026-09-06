@@ -1,0 +1,3 @@
+# Exact-byte authority carrier: hashes in CURRENT.md/SHA256SUMS/receipts bind file bytes.
+** binary
+.gitattributes text eol=lf

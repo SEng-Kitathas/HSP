@@ -1,6 +1,6 @@
 # SOP Adoption — Rahl Engineering Canonical SOP R4.2 — 2026-09-03
 
-Status: **ACTIVE CANONICAL PROCESS AUTHORITY FOR HSP WORKSTREAM**
+Status: **HISTORICAL HSP-LOCAL PROVENANCE; SUPERSEDED AS UNIVERSAL PROCESS AUTHORITY**
 
 ## Exact adopted package
 - Package: `RAHL_ENGINEERING_CANONICAL_SOP_R4_2_2026-09-03_FINAL.zip`
@@ -52,3 +52,16 @@ The following operator-authored rule is active over this workstream without rewr
 Binding addendum artifact: `docs/DOCTRINE_ADDENDUM_LINEAR_HUMAN_READ_SEMANTIC_GATE_2026-09-03.md`.
 
 This addendum is process authority only. It strengthens semantic admission discipline while preserving the exact R4.2 package bytes and lineage.
+
+
+## Historical status after 2026-09-06 reconciliation
+
+This document is retained as project-local provenance. It is **no longer the active universal/process authority record**.
+
+Current universal/process authority is published under `authority/rahl-sop/` and reconciled in:
+
+`docs/AUTHORITY_RECONCILIATION_R4_4_ICF_CS_V1_1_2026-09-06.md`
+
+The previously recorded local artifact SHA `6e8d48d311a089dd2076869b50168d8c68bfb8770819a7c1dd8cf5acafdcb86f` does not match canonical R4.4's retained R4.2 ancestry SHA `eb167543e9ceb2ae01449f421d2916e61b7dd924270ea2e83e3364c9d808ce9a`. Therefore the local record remains historical provenance rather than byte-identical canonical ancestry.
+
+The local evidence-referent and mutation-scope semantics remain active as HSP-local doctrine under names **HSP-LDO-ER** and **HSP-LDO-MS**. Their former C24/C25 labels are retired to avoid collision with canonical R4.4 numbering.

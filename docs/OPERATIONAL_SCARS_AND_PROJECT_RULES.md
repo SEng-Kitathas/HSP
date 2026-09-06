@@ -95,3 +95,32 @@ Integrity, structure, parsing, hashes, hostile tests, summaries, search hits, an
 `SEARCH_COVERAGE != LINEAR_READ`
 `STRUCTURAL_VALIDITY != LOAD_BEARING_MEANING`
 `CONTAINER_VERIFIED != READABLE_MEMBER_SEMANTICALLY_ADMITTED`
+
+
+## 2026-09-06 — Authority-carrier checkout representation scar
+
+### Observed scar
+The repository's authority carrier was correct in Git object storage and inside the signed/hash-bound distribution ZIP, but this Windows checkout had `core.autocrlf=true` and no authority-specific attributes. `CURRENT.md`, `SHA256SUMS.txt`, and the detached release receipt were therefore expanded from LF to CRLF in the working tree, changing their byte hashes while leaving their parsed semantics unchanged.
+
+### Lesson
+**Authority witnesses that bind exact bytes must be protected at checkout representation boundaries.** Semantic equality does not rescue a failed exact-byte witness.
+
+### Rules earned
+31. Byte-bound authority carriers SHALL define explicit repository representation policy (`.gitattributes` or equivalent) sufficient to preserve witnessed bytes across checkout platforms.
+32. When a working-tree authority hash fails, compare Git-object bytes, packaged witness bytes, and working-tree bytes before concluding release corruption.
+33. `SEMANTIC_EQUALITY != BYTE_WITNESS_EQUALITY`.
+34. Checkout EOL conversion is a representation mutation and SHALL NOT be silently ignored on authority receipts/manifests whose hashes bind exact bytes.
+
+## 2026-09-06 — Same-version / different-artifact authority scar
+
+### Observed scar
+The HSP project historically recorded a local artifact labeled R4.2 with SHA `6e8d48d...cb86f`, while canonical R4.4 ancestry binds R4.2 to `eb167543...ce9a`. The local artifact could not be recovered as surviving canonical R4.2 bytes, and the two lines also used colliding C24/C25 labels for different obligations.
+
+### Lesson
+**Version labels and rule numbers are not authority identities. Exact artifact lineage and semantic referents outrank convenient naming continuity.**
+
+### Rules earned
+35. `SAME_VERSION_LABEL != SAME_ARTIFACT`.
+36. `SAME_RULE_NUMBER != SAME_RULE` unless exact governing lineage and semantic referent are established.
+37. When local doctrine collides numerically with newer canonical doctrine, preserve the local semantics under explicit project-local names rather than overwriting canonical numbering or pretending equivalence.
+38. Historical local authority records may remain provenance without retaining current universal/process precedence.

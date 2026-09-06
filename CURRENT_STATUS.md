@@ -1,22 +1,19 @@
 # Current Status
 
-- Mode: BUILD-COMMIT; post-Pass-346 convergence qualified; live PROMOTION not entered.
-- Active process authority: **Rahl Engineering Canonical SOP R4.2**, adopted ZIP SHA-256 `6e8d48d311a089dd2076869b50168d8c68bfb8770819a7c1dd8cf5acafdcb86f`.
-- Mainline: Pass 345 remains last clean mainline; HSP v0 remains research-only.
-- Pass 346 v0.2 bounded-read dogfood remains complete with final verdict **NO WINNER**.
-- Pass 346 final evidence remains under `experiments/pass346/results_2026-09-02/`; final adjudication SHA `4ab3cce22a37c46fe72d61b3cb70d33244b1b1b4744f9c564ae509d34abb08e6`.
-- Post-experiment convergence v0.1 started from exact final-B compatibility/evaluator tree `2fa75e3f085f415e32ad131ae606d302192436d5ee4fd47896acfd060071a830`.
-- Convergence closes the CSC metadata seam by separating raw source bytes, selected decoded UTF-8 bytes, returned UTF-8 bytes, and byte-budget truncation at the core read boundary.
-- Both active read-many parents (`lab_tools_project` and `power_routes`) project one shared validated child-evidence contract and fail closed on missing/inconsistent evidence.
-- Candidate verification: 19/19 convergence tests PASS; visible 6/6; M3 regression 9/9; prior hidden hostile 5/5; compileall PASS.
-- R4.2 mutation-scope readback: exactly seven authorized payload paths changed; no payload additions/missing; imported schema semantic diffs bounded to authorized evidence fields/descriptions; ACTIVE BOM/CRLF preserved; runtime byproducts absent at seal.
-- Candidate legacy/evaluator tree SHA-256: `5d2cef89b32c4f76ca139e779cbb12829620939f36c24625028cc1aecc2e6196`.
-- Candidate portable POSIX-relative-path tree SHA-256: `7855cb50a9c540a4d203b69a7e42acec3472684aa0336755ca691780d217e442`.
-- Candidate canonical compact manifest JSON SHA-256: `4d0bd3c25a3bd823aaf840c06fc58ea1c2f0027b30089751ff82bec830ed6f83`.
-- Candidate seal SHA-256: `b41daa6ef6c127f849a0f952fcce39b2533a35a203257a2d6510f975542565dd`.
-- Aggregate-digest scar: the same per-file byte map yielded different aggregate hashes under Windows Path ordering vs POSIX relative-path ordering; digest claims must therefore name their traversal/serialization referent.
-- Compact convergence evidence is mirrored under `experiments/pass346/convergence_v0_1/`; full isolated candidate tree remains local.
-- The qualified transcript-independent continuity-envelope candidate remains a separate unpromoted branch and is not bundled with bounded-read convergence.
-- Live receiver source remains unmodified by Pass 346/convergence.
-- Next gate: explicit PROMOTION review/currentness/rebase/rollback/live-smoke plan before any live receiver mutation.
-- Additive doctrine active over R4.2: **LINEAR HUMAN READ / SEMANTIC GATE**. Any meaningfully readable artifact SHALL receive a complete linear semantic read before promotion, sealing, publication, admission, or load-bearing use; automated checks may precede/support but SHALL NOT substitute. Binding addendum SHA `5f4ae884eb5fe0621f6b2615d5d631e76702a9a258e555a23897309c1d3808ac`.
+- Mode: PROMOTION — authority carrier/adoption only; live receiver promotion not entered.
+- Current universal/process authority: **Rahl Engineering Canonical SOP R4.4 + active additive ICF-CS v1.1** from `authority/rahl-sop/`.
+- R4.4 SHA-256: `04f3e94efe8c901cc83a12a9c8531be8a9bb350728b8f9eba53db0fd082b3bbc`.
+- ICF-CS v1.1 payload SHA-256: `f6f4ab2bafdb0ef2a7db1622a00462990baf980284d5b33827807caea1d41f63`.
+- Detached receipt SHA-256: `418346ed6373887b5b924e71ca2bf4b83effad20b7269ab40607f5d2750b970c`.
+- Distribution ZIP SHA-256: `2bb57b24967f80fc5dcf028eece142150ce5d6a1356f12e13cda26951ae19fe7`.
+- Carrier commit imported by fast-forward: `ead64c3b79f8e66cb411ab597b17b20e68471a52`.
+- Carrier checkout representation repair: `authority/rahl-sop/.gitattributes` now preserves exact authority bytes; LF Git-object bytes for CURRENT/SHA256SUMS/detached receipt were restored after `core.autocrlf=true` had produced CRLF working copies.
+- Authority reconciliation record: `docs/AUTHORITY_RECONCILIATION_R4_4_ICF_CS_V1_1_2026-09-06.md`.
+- Prior HSP-local artifact labeled R4.2 with SHA `6e8d48d311a089dd2076869b50168d8c68bfb8770819a7c1dd8cf5acafdcb86f` is retained as historical provenance only; canonical R4.4 ancestry binds R4.2 SHA `eb167543e9ceb2ae01449f421d2916e61b7dd924270ea2e83e3364c9d808ce9a`.
+- Local rule-number collision resolved: former local C24/C25 meanings are retained under **HSP-LDO-ER** (Evidence Referent Closure) and **HSP-LDO-MS** (Mutation-Scope Verification); canonical R4.4 numbering is not overwritten.
+- Mainline: Pass 345 remains last clean HSP mainline; HSP v0 remains research-only.
+- Pass 346 final verdict remains **NO WINNER**.
+- Post-experiment bounded-read convergence v0.1 remains qualified in isolation and unpromoted; candidate seal `b41daa6ef6c127f849a0f952fcce39b2533a35a203257a2d6510f975542565dd`.
+- Qualified transcript-independent continuity-envelope candidate remains a separate unpromoted branch.
+- Live receiver source remains unmodified by Pass 346/convergence/this authority reconciliation.
+- Next gate after authority adoption seal: explicit project work selection; no receiver promotion is implied by this reconciliation.

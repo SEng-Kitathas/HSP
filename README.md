@@ -18,8 +18,8 @@ The machine-readable correction boundary is `current/hsp_v0/HSP_REFERENT_ERRATA_
 - Canonical v2.9 checkpoint SHA-256: `5b88f008e6f5aec31737f7c6dfcf3614376f8b7a4660fec03800260036079313`.
 - HSP v0 holon contract: **research candidate only; no production authority**.
 - Pass 346: bounded project-file read dogfood completed under v0.2 with final verdict **NO WINNER**; both evaluator-green arms were rejected for clean promotion by CSC parent-evidence counterexamples.
-- Post-experiment convergence v0.1 is now **qualified in isolation, not promoted**. It closes the byte/truncation evidence referent seam under Rahl Engineering Canonical SOP R4.2 and is mirrored under `experiments/pass346/convergence_v0_1/`.
-- Active process authority for this workstream: Rahl Engineering Canonical SOP R4.2, adopted ZIP SHA-256 `6e8d48d311a089dd2076869b50168d8c68bfb8770819a7c1dd8cf5acafdcb86f`; this is process authority, not HSP/product authority.
+- Post-experiment convergence v0.1 is **qualified in isolation, not promoted**. It closes the byte/truncation evidence referent seam and is mirrored under `experiments/pass346/convergence_v0_1/`; its original local R4.2-governed execution history remains provenance, while current process authority is R4.4 + ICF-CS v1.1.
+- Current universal/process authority: Rahl Engineering Canonical SOP R4.4 (`04f3e94efe8c901cc83a12a9c8531be8a9bb350728b8f9eba53db0fd082b3bbc`) + active additive ICF-CS v1.1 (`f6f4ab2bafdb0ef2a7db1622a00462990baf980284d5b33827807caea1d41f63`).
 - Preregistration v0.1 remains a stale-currentness scar; v0.2 is the frozen experiment authority. Compact final experiment evidence is mirrored under `experiments/pass346/results_2026-09-02/`.
 
 ## Pass 346 final result
@@ -49,3 +49,11 @@ See `experiments/pass346/` and `experiments/pass346/results_2026-09-02/`.
 GitHub tracks current working authority, experiments, scars, and reproducible public-facing control artifacts. Sealed historical ZIP packages remain separate unless deliberately published. Private in-house SOP material is not automatically republished into this repository. See `docs/REPOSITORY_SYNC_POLICY.md`.
 
 The active operational scar/rule ledger is `docs/OPERATIONAL_SCARS_AND_PROJECT_RULES.md`. In particular, local execution, local persistence, assistant readback, chat rendering, artifact registration, and remote synchronization are distinct states and must not be collapsed into a single success/failure claim.
+
+## Current shared process authority
+
+This repository now carries the current shared process stack under `authority/rahl-sop/`:
+- Rahl Engineering Canonical SOP R4.4 — `04f3e94efe8c901cc83a12a9c8531be8a9bb350728b8f9eba53db0fd082b3bbc`
+- active additive ICF-CS v1.1 payload — `f6f4ab2bafdb0ef2a7db1622a00462990baf980284d5b33827807caea1d41f63`
+
+Project-specific HSP authority remains separate. See `docs/AUTHORITY_RECONCILIATION_R4_4_ICF_CS_V1_1_2026-09-06.md` for precedence, historical R4.2 mismatch handling, and retained HSP-local doctrine names.

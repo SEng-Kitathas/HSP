@@ -1,6 +1,6 @@
 # Additive Doctrine Addendum — Linear Human Read / Semantic Gate — 2026-09-03
 
-Status: **ACTIVE ADDITIVE DOCTRINE OVER R4.2**
+Status: **HSP-LOCAL PROVENANCE / ACTIVE SEMANTIC REINFORCEMENT; CANONICALIZED BY R4.4**
 
 This addendum does not rewrite or replace the sealed Rahl Engineering Canonical SOP R4.2 package. It is an additive governing rule for this HSP workstream and any artifact admission/promotion decision made under it.
 
@@ -38,3 +38,8 @@ The promotion/sealing checklist now has an explicit semantic gate:
 `INTEGRITY / STRUCTURE CHECKS -> COMPLETE LINEAR HUMAN READ WHEN MEANINGFULLY READABLE -> SEMANTIC ADMISSION -> PROMOTION / SEAL / PUBLICATION / LOAD-BEARING USE`
 
 Automation may occur before, during, or after the linear read, but cannot replace it.
+
+
+## Status after R4.4 + ICF-CS v1.1 reconciliation
+
+This operator-authored addendum remains valid project provenance and is semantically compatible with the current universal process stack. Canonical R4.4 now carries the generalized linear semantic-read obligation, semantic-read ledger, and promotion interlock directly. Accordingly, this addendum is no longer a competing universal layer; it remains an HSP-local provenance record and reinforcement of the canonical semantic-read gate.
