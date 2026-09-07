@@ -1,19 +1,21 @@
 # Current Status
 
-- Mode: PROMOTION — authority carrier/adoption only; live receiver promotion not entered.
+- Mode: BUILD-COMMIT — HSP-SC v0.5 standalone compiler qualification/evidence closure; no Singularity Works mutation from this workstream.
 - Current universal/process authority: **Rahl Engineering Canonical SOP R4.4 + active additive ICF-CS v1.1** from `authority/rahl-sop/`.
 - R4.4 SHA-256: `04f3e94efe8c901cc83a12a9c8531be8a9bb350728b8f9eba53db0fd082b3bbc`.
 - ICF-CS v1.1 payload SHA-256: `f6f4ab2bafdb0ef2a7db1622a00462990baf980284d5b33827807caea1d41f63`.
-- Detached receipt SHA-256: `418346ed6373887b5b924e71ca2bf4b83effad20b7269ab40607f5d2750b970c`.
-- Distribution ZIP SHA-256: `2bb57b24967f80fc5dcf028eece142150ce5d6a1356f12e13cda26951ae19fe7`.
-- Carrier commit imported by fast-forward: `ead64c3b79f8e66cb411ab597b17b20e68471a52`.
-- Carrier checkout representation repair: `authority/rahl-sop/.gitattributes` now preserves exact authority bytes; LF Git-object bytes for CURRENT/SHA256SUMS/detached receipt were restored after `core.autocrlf=true` had produced CRLF working copies.
-- Authority reconciliation record: `docs/AUTHORITY_RECONCILIATION_R4_4_ICF_CS_V1_1_2026-09-06.md`.
-- Prior HSP-local artifact labeled R4.2 with SHA `6e8d48d311a089dd2076869b50168d8c68bfb8770819a7c1dd8cf5acafdcb86f` is retained as historical provenance only; canonical R4.4 ancestry binds R4.2 SHA `eb167543e9ceb2ae01449f421d2916e61b7dd924270ea2e83e3364c9d808ce9a`.
-- Local rule-number collision resolved: former local C24/C25 meanings are retained under **HSP-LDO-ER** (Evidence Referent Closure) and **HSP-LDO-MS** (Mutation-Scope Verification); canonical R4.4 numbering is not overwritten.
-- Mainline: Pass 345 remains last clean HSP mainline; HSP v0 remains research-only.
-- Pass 346 final verdict remains **NO WINNER**.
-- Post-experiment bounded-read convergence v0.1 remains qualified in isolation and unpromoted; candidate seal `b41daa6ef6c127f849a0f952fcce39b2533a35a203257a2d6510f975542565dd`.
-- Qualified transcript-independent continuity-envelope candidate remains a separate unpromoted branch.
-- Live receiver source remains unmodified by Pass 346/convergence/this authority reconciliation.
-- Next gate after authority adoption seal: explicit project work selection; no receiver promotion is implied by this reconciliation.
+- Authority reconciliation is Git/remote sealed at `a9e32d0b108754416938192e3d692096fffc4e0a`.
+- Governance Contact v1.0 activation resolver is present in current ingress, but the exact local activation token and global active receipt are absent at this target; therefore Governance Contact currently has **no local authority effect** here.
+- HSP-local **HSP-LDO-ER** (Evidence Referent Closure) and **HSP-LDO-MS** (Mutation-Scope Verification) remain active.
+- Mainline: Pass 345 remains the last clean HSP mainline checkpoint; HSP v0 remains research-only.
+- Pass 346 experiment verdict remains **NO WINNER**.
+- Post-experiment bounded-read convergence has since been **technically promoted into the live PCMMAD receiver and runtime-verified**. Local promotion receipt: `promotion_rebase_v0_1/LIVE_PROMOTION_RECEIPT.json`, SHA `1fb8b7fb36c13e0b4bb8cbb8af0678c31e4c657f9df18ba32cc6fd46bd9c489d`, held in sibling project `hsp-pass346-prereg-pcmmad-bounded-read`.
+- The bounded-read promotion does **not** rescore Pass 346. Final compact promotion evidence has not yet been mirrored/Git-sealed into this HSP repo, so technical promotion and Git evidence closure remain separate states.
+- The live restart controller UTF-8 boundary was repaired during promotion: controller SHA `f039e8b59f261187145efab8fa6300029b9a6c62438ecf93bd3cd27ef66c8f75`; generated ACTIVE schema SHA `e11cc3f700de3b8433f572c60b3e92de9649ad4a57483cc4a8a93774f21ec435`.
+- Qualified transcript-independent continuity-envelope candidate remains a separate **unpromoted** branch.
+- HSP-SC v0.5 semantic-composition kernel exists in isolated project `hsp-sc-v0-5-semantic-composition-kernel` and is being qualified in mandatory **STANDALONE** mode.
+- HSP-SC v0.5 current qualification evidence: 23/23 standalone/unit/hostile tests PASS; compileall PASS; two clean compiles produce byte-identical summary/IR/Python/lowering-map outputs; Pass-346 evidence specimen emits IR only; local AST witness accepts generated good source and rejects a caller-target mutant. Final semantic admission/seal is still pending.
+- HSP standalone doctrine: Forge/Singularity Works is optional downstream observation/integration infrastructure and SHALL NOT be a prerequisite for HSP compilation, qualification, or continued research. See `docs/HSP_STANDALONE_AND_SINGULARITY_WORKS_COOPERATION_2026-09-07.md`.
+- Singularity Works authority topology, per operator direction: Forge-app/front-end and main-dev/back-end are cooperative co-authoritative workstreams over their owned surfaces; intermediate divergence is not automatically conflict. main-dev directs cross-thread integration/convergence unless explicitly overridden by the operator.
+- HSP and Singularity Works remain separate authority domains; this HSP workstream does not mutate Singularity Works state.
+- Next gate: finish HSP-SC v0.5 semantic admission and candidate seal; then separately close bounded-read promotion evidence into HSP Git when selected. Forge-assisted HSP correspondence remains a future optional integration experiment.
